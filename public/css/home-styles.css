@@ -226,10 +226,6 @@ body {
     margin: 0 auto;
   }
 
-  #login .row {
-    right: 0px;
-  }  
-
   #login .heading { 
     line-height: 1.5;    
     text-align: left;
@@ -238,6 +234,7 @@ body {
   }
 
   .login-heading {
+    font-family: Gallient;
     font-weight: bold;
     font-size: 32px;
     line-height: 38px;
@@ -260,7 +257,6 @@ body {
     background: white;
     box-shadow: 4px 15px 30px rgpa(77, 70, 63, 0.62);
     border-radius: 10px;
-    color: white;
     width: 550px;
     height: 40px;
   }
@@ -306,4 +302,97 @@ body {
   margin-left: 0px;
   width: 550px;
   }
-    
+  
+  /* Section Register */
+  #register {
+    position: relative;
+    height: 100%;
+    overflow:hidden;
+    background-color: #EEEEEE;
+    color: black;
+    font-family: Lato;
+    font-style: normal;
+  }
+
+  #register .container {
+    width: 50%;
+    margin: 0 auto;
+    justify-content: center;
+    text-align: center;
+  }
+
+  #register .heading {
+    line-height: 1.5;    
+    text-align: left;
+    padding-bottom: 10px;
+    padding-top: 30px;
+  }
+
+  .register-heading {
+    font-family: Gallient;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 38px;
+    text-transform: capitalize;
+  }
+
+  .register-description {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .register-button {
+    margin: 5% 3% 5% 0;
+    background: black;
+    border: 1px solid #EBE1FA;
+    box-sizing: border-box;
+    font-weight: bold;
+    border-radius: 8px;
+    width: 475px;
+  }
+
+  .register-button:hover {
+    background: #d3cece;
+    color: black;
+  }
+
+  #register .textbox {    
+    background: white;
+    box-shadow: 4px 15px 30px rgpa(77, 70, 63, 0.62);
+    height: 50px;
+  }
+
+  #register .textbox-col {
+    padding: 0px 0px 10px 0px;
+  }
+
+  .register-fname {
+    border-top-left-radius: 8px;
+    width: 100%;
+  }
+
+  .register-lname {
+    border-top-right-radius: 8px;
+    width: 100%;
+  }
+
+  .register-email {
+    width: 460px;
+    width: 100%;
+  }
+
+  .register-password {
+    width: 460px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    width: 100%;
+  }
+
+  .register-image {
+    position: absolute;
+    right: 0px;
+    /* max-width: 100%; */
+    max-height: 100%;
+    height: auto;
+    width: 500px;
+  }
