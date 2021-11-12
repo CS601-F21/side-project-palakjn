@@ -1,0 +1,309 @@
+@font-face { 
+  font-family: 'Gallient';
+  src: url('fonts/GallientRegular-eZoMp.woff') format('woff');
+  }
+
+body {
+  background-color: black;
+}
+
+/* Containers */
+.container-fluid{
+  padding: 2% 7% 0% 7%;
+}
+
+/* Section Navigation bar */
+#navigationBar {
+  padding-bottom: 0%;
+}
+
+.navbar {
+  padding: 0 0 2.0rem;
+}
+
+.navbar-brand {
+  font-family: "Ubuntu";
+  font-size: 2.0rem;
+  font-weight: bold;
+}
+
+.nav-item {
+  padding: 0 18px;
+}
+
+.nav-link {
+  font-size: 1.2rem;
+  font-family: "Montserrat-Light";
+}
+
+.login {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 18px;
+  color: #0e0e0e;
+  text-align: center;
+  background: #F1D8C0;
+  border-radius: 10px;
+  width: 150px;
+}
+
+.register {  
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 18px;
+  color: #FFFFFF;
+  text-align: center;
+  border-radius: 10px;  
+  width: 150px;
+}
+
+/* section title*/
+  #title {
+    position: relative;
+    height: 100%;
+    overflow:hidden;
+    background-color: #EEEEEE;
+    color: black;
+  }  
+
+  #title .row {
+    right: 0px;
+  }
+
+  #title .heading {
+    text-align: center;  
+    line-height: 1.5;      
+    padding: 130px 0px 100px 0px;
+  }
+
+  .title-heading {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2.5rem;  
+    text-transform: uppercase;
+  }
+
+  .title-big-heading {
+    font-family:  Gallient;
+    font-style: normal;
+    font-size: 6.0rem;
+  }
+
+  #title .container-fluid {
+    padding: 3% 5% 7%;
+  }
+
+  .explore-button {
+    margin: 5% 3% 5% 0;
+    text-align: center;
+    background: #F1D8C0;
+    border: 1px solid #EBE1FA;
+    box-sizing: border-box;
+    font-weight: bold;
+    border-radius: 30px;
+  }
+
+  .title-image {
+    position: absolute;
+    right: 0px;
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    width: auto\9;
+  }
+
+/* Section About */
+  #about {
+    position: relative;
+    height: 100%;
+    overflow:hidden;
+  }
+
+  #about .container-fluid {
+    padding: 4% 5% 7%;
+  }
+
+  .about-heading {
+    text-align: center;
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 48px;
+    line-height: 58px;
+    color: #FFFFFF;
+  }
+
+  .img-feature-top {
+    position: absolute;
+    width: 325px;
+    height: 250px;
+    left: 294px;
+    top: 99px;
+
+  }
+
+  .img-feature-left-top {
+    position: absolute;
+    width: 300px;
+    height: 250px;
+    left: 38px;
+    top: 181px
+  }
+
+  .img-feature-left-bottom {
+    position: absolute;
+    width: 350px;
+    height: 225px;
+    left: 72px;
+    top: 325px;
+  }
+
+  .img-feature-right {
+    position: absolute;
+    width: 275px;
+    height: 250px;
+    left: 380px;
+    top: 296px;
+  }
+
+  .img-feature-bottom {
+    position: absolute;
+    width: 300px;
+    height: 250px;
+    left: 125px;
+    top: 420px;
+  }
+
+  .description {
+    text-align: left;
+    padding-left: 50px;
+    color: white;
+  }
+
+  .description .heading {
+    font-family: Gallient;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 3.0rem;
+    padding-top: 120px;
+    text-align: center;
+  }
+
+  .description .feature {
+    font-family: Ubuntu;
+    font-style: normal;
+    font-size: 1.5rem;
+    text-align: justify;
+  }
+
+/* Section Contact */
+  #contact {
+    text-align: center;
+    color: white;
+  }
+
+  .social-icon {
+    margin: 20px 10px;
+  }
+
+   /* Section login */
+   #login {
+    position: relative;
+    height: 100%;
+    overflow:hidden;
+    background-color: #EEEEEE;
+    color: black;
+    font-family: Lato;
+    font-style: normal;
+  }    
+
+  #login .container {
+    width: 50%;
+    margin: 0 auto;
+  }
+
+  #login .row {
+    right: 0px;
+  }  
+
+  #login .heading { 
+    line-height: 1.5;    
+    text-align: left;
+    padding-bottom: 10px;
+    padding-top: 30px;
+  }
+
+  .login-heading {
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 38px;
+    text-transform: capitalize;
+  }
+
+  .login-description {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .login-labels {
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 18px;
+    padding-top: 10px;
+  }
+
+  .login-textbox {
+    background: white;
+    box-shadow: 4px 15px 30px rgpa(77, 70, 63, 0.62);
+    border-radius: 10px;
+    color: white;
+    width: 550px;
+    height: 40px;
+  }
+
+  .login-button {
+    margin: 5% 3% 5% 0;
+    background: black;
+    border: 1px solid #EBE1FA;
+    box-sizing: border-box;
+    font-weight: bold;
+    border-radius: 10px;
+    width: 550px;
+  }
+
+  .login-button:hover {
+    background: #d3cece;
+  }
+
+  .login-or {
+    position: relative;
+    color: #aaa;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    /* padding-left: 75px; */
+  }
+
+  .span-or {
+  display: block;
+  position: absolute;
+  left: 275px;
+  top: -2px;
+  margin-left: -25px;
+  width: 50px;
+  text-align: center;
+  }
+
+  .hr-or {
+  height: 1px;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+  margin-left: 0px;
+  width: 550px;
+  }
+    

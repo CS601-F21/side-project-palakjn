@@ -1,0 +1,32 @@
+<%- include("partials/home-header"); -%>
+
+<section id="login">  
+  <div class="row">    
+    <div class="col-lg-8 heading">
+      <div class="container">
+        <h3 class="login-heading">Login Into Your Account</h3>
+        <p class="login-description">Welcome back! Login with your data that you entered during registration.</p>
+        <form action="/login" method="post">
+          <h4 class="login-labels">Email*</h4>
+          <input class="login-textbox" type="text" name="email"></input>
+          <h4 class="login-labels">Password*</h4>
+          <input class="login-textbox" type="password" name="password"></input><br>      
+          <button type="button" class="btn btn-outline-light btn-lg login-button">Login</button>
+        </form>        
+        <p class="login-labels">Not registered yet? <a href="/register">Create an account</a></p>           
+        <div class="login-or">
+            <hr class="hr-or">
+            <span class="span-or">OR</span>
+        </div>
+        <a class="btn btn-primary btn-lg btn-block login-button" href="#!" role="button">
+          <i class="fab fa-google"></i><span style="padding-left: 15px;">Continue with Google</span>
+        </a>  
+      </div>            
+    </div>
+    <div class="col-lg-4">
+      <img class="title-image" src="images/login-title.png" alt="title">
+    </div>
+  </div>
+</section>
+
+<%- include("partials/home-footer"); -%> cvv 
