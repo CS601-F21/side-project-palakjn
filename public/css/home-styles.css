@@ -348,7 +348,7 @@ body {
     box-sizing: border-box;
     font-weight: bold;
     border-radius: 8px;
-    width: 475px;
+    width: 100%;
   }
 
   .register-button:hover {
