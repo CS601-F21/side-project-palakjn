@@ -20,6 +20,10 @@ app.get("/register", function(Req, res) {
     res.render("register")
 });
 
+app.get("/dashboard", function(Req, res) {
+    res.render("dashboard")
+});
+
 app.listen(3000, function() {
     console.log("Server started on port 3000");
   });
