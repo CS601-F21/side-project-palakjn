@@ -10,7 +10,8 @@
         <a class="btn btn-primary btn-lg btn-block register-button" href="/auth/google" role="button">
           <i class="fab fa-google"></i><span style="padding-left: 15px;">Join with Google</span>
         </a>       
-        <p>OR</p>          
+        <p>OR</p>  
+        <span style="color: red;"><%= errorMessage %></span>        
         <form action="/register" method="post">
           <div class="row">
             <div class="col-lg-6 textbox-col">

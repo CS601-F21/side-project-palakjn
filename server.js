@@ -81,7 +81,9 @@ app.get("/", function(req, res) {
 });
 
 app.get("/login", function(req, res) {
-    res.render("login")
+    res.render("login", {
+        errorMessage: ""
+    })
 });
 
 app.post("/login", function(req, res) {
@@ -90,19 +92,33 @@ app.post("/login", function(req, res) {
         password: req.body.password
     });
 
-    req.login(user, function(err) {
-        if (err) {
+    passport.authenticate("local", function(err, user, info) {
+        if(err) {
             console.log(err);
-        } else {
-            passport.authenticate("local")(req, res, function () {
-                res.redirect("/dashboard");
+
+            return res.render("login", {
+                errorMessage: "Authentication attempt has failed, likely due to an interval error. Try again after some time and contact us if problem persists."
             });
         }
-    });
+        if(!user) {
+            return res.render("login", {
+                errorMessage: "Authentication attempt has failed, likely due to invalid credentials. Please verify and try again."
+            });
+        }
+        req.login(user, function(err) {
+            if (err) {
+                console.log(err);
+            } else {
+                return res.redirect("/dashboard");
+            }
+        });        
+    }) (req, res)    
 });
 
 app.get("/register", function(req, res) {
-    res.render("register")
+    res.render("register", {
+        errorMessage: ""
+    })
 });
 
 app.post("/register", function(req, res) {
@@ -110,9 +126,21 @@ app.post("/register", function(req, res) {
     User.register({username: req.body.username, fname: req.body.fname, lname: req.body.lname, displayName: req.body.fname + " " + req.body.lname}, req.body.password, function(err, user){
         if(err) {
             console.log(err);
+
+            let user = User.find({ username: { $eq: req.body.username }});
+
+            if (user != null) {
+                res.render("register", {
+                    errorMessage: "Usename with the same name already exists."
+                })
+            }
+            else {
+                res.redirect("/register");
+            }
+
             res.redirect("/register");
         } else {
-            passport.authenticate("local")(req, res, function() {
+            passport.authenticate("local") (req, res, function() {
                 res.redirect("/dashboard");
             });
         }
@@ -123,12 +151,25 @@ app.get("/auth/google",
     passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
-app.get("/auth/google/dashboard",
-    passport.authenticate("google", { failureRedirect: "/login" }),
-    function(req, res) {
-        //Successful authentication, redirect home.
-        res.redirect("/dashboard");
-    });
+app.get("/auth/google/dashboard", function(req, res) {
+    passport.authenticate("google", function(err, user, info) {
+        if(err) {
+            console.log(err);
+
+            return res.render("login", {
+                errorMessage: "Authentication attempt has failed, likely due to an interval error. Try again after some time and contact us if problem persists."
+            });
+        }
+
+        req.login(user, function(err) {
+            if (err) {
+                console.log(err);
+            } else {
+                return res.redirect("/dashboard");
+            }
+        });        
+    }) (req, res)    
+ });
 
 app.get("/logout", function(req, res) {
     req.logout();
@@ -141,7 +182,9 @@ app.get("/dashboard", function(req, res) {
             displayName: req.user.displayName
         });
     } else {
-        res.redirect("/login");
+        res.redirect("/login", {
+            errorMessage: ""
+        });
     }
 });
 

@@ -6,6 +6,7 @@
       <div class="container">
         <h3 class="login-heading">Login Into Your Account</h3>
         <p class="login-description">Welcome back! Login with your data that you entered during registration.</p>
+        <span style="color: red;"><%= errorMessage %></span>
         <form action="/login" method="post">
           <h4 class="login-labels">Email*</h4>
           <input class="login-textbox" type="email" name="username"></input>
