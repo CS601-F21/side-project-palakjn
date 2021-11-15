@@ -42,7 +42,8 @@ const userSchema = new mongoose.Schema ({
     lname: String,
     email: String,
     password: String,
-    googleId: String
+    googleId: String,
+    displayName: String
 });
 
 userSchema.plugin(passportLocalMongoose);
@@ -69,7 +70,7 @@ passport.use(new googleStrategy({
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
   },
   function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({ username: profile.emails[0].value, googleId: profile.id }, function (err, user) {
+    User.findOrCreate({username: profile.emails[0].value, googleId: profile.id, displayName: profile.displayName}, function (err, user) {
       return cb(err, user);
     });
   }
@@ -106,7 +107,7 @@ app.get("/register", function(req, res) {
 
 app.post("/register", function(req, res) {
 
-    User.register({username: req.body.username, fname: req.body.fname, lname: req.body.lname}, req.body.password, function(err, user){
+    User.register({username: req.body.username, fname: req.body.fname, lname: req.body.lname, displayName: req.body.fname + " " + req.body.lname}, req.body.password, function(err, user){
         if(err) {
             console.log(err);
             res.redirect("/register");
@@ -136,7 +137,9 @@ app.get("/logout", function(req, res) {
 
 app.get("/dashboard", function(req, res) {
     if (req.isAuthenticated()) {
-        res.render("dashboard");
+        res.render("dashboard", {
+            displayName: req.user.displayName
+        });
     } else {
         res.redirect("/login");
     }

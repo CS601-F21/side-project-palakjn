@@ -1,15 +1,16 @@
-body {
-    background-color: black;
-  }
-
-  /* Containers */
+ body {   
+  background-color: #EEEEEE;
+ }
+ 
+ /* Containers */
 .container-fluid{
     padding: 2% 7% 0% 7%;
   }
   
   /* Section Navigation bar */
   #navigationBar {
-    padding-bottom: 0%;
+    padding-bottom: 0%;    
+    background-color: black;
   }
   
   .navbar {
