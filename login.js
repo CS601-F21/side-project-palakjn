@@ -65,9 +65,7 @@ module.exports = function(app, passport, User) {
                 displayName: req.user.displayName
             });
         } else {
-            res.redirect("/login", {
-                errorMessage: ""
-            });
+            res.redirect("/login");
         }
     });
 }

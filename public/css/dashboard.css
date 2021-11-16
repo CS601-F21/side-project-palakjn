@@ -3,11 +3,11 @@
  }
  
  /* Containers */
-.container-fluid{
+ .container-fluid{
     padding: 2% 7% 0% 7%;
   }
   
-  /* Section Navigation bar */
+/* Section Navigation bar */
   #navigationBar {
     padding-bottom: 0%;    
     background-color: black;
@@ -40,4 +40,25 @@
   .btn-background:hover {
     background-color: black;
     border-color: black;
+  }
+
+/* Section Users */
+  .addUser {
+    text-align: right;
+  }
+
+  #users .btn-dark {
+    color: white;
+  }
+
+  .error {
+    color: red;
+    font-family: Gallient;
+    font-size: 14px;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  #passwordHelpBlock {
+    text-align: left;
   }

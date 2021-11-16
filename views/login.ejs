@@ -8,9 +8,9 @@
         <p class="login-description">Welcome back! Login with your data that you entered during registration.</p>
         <span style="color: red;"><%= errorMessage %></span>
         <form action="/login" method="post">
-          <h4 class="login-labels">Email*</h4>
+          <h4 class="login-labels"><i class="fas fa-envelope prefix grey-text"></i> Email*</h4>
           <input class="login-textbox" type="email" name="username"></input>
-          <h4 class="login-labels">Password*</h4>
+          <h4 class="login-labels"><i class="fas fa-lock prefix grey-text"></i> Password*</h4>
           <input class="login-textbox" type="password" name="password"></input><br>      
           <button type="submit" class="btn btn-outline-light btn-lg login-button">Login</button>
         </form>        

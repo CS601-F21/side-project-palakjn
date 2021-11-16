@@ -1,0 +1,54 @@
+<%- include("partials/dashboard-header"); -%>
+
+    <section id="users">
+        <div class="container-fluid">
+            <div class="error">                
+                <h3><%= existClient %></h3>
+            </div>
+
+            <div class="">
+                <% if(clients != null && clients.length > 0) { %>
+                    <% clients.forEach(function(client) { %>
+                        <p><%=client.name%></p>
+                  <% }) %>
+                <%}%>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6 addUser">
+                    <a class="btn btn-dark btn-lg" data-toggle="modal" data-target="#askForName" role="button"><i class="fas fa-user-plus"></i> Add Client</a>
+                    
+                    <div class="modal fade" id="askForName" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title">Enter Client Name: </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+
+                            <form action="/addClient" method="post">
+                                <div class="modal-body">
+                                    <input type="text" class="form-control" placeholder="Client Name" name="name" required="true"> 
+                                    <small id="passwordHelpBlock" class="form-text text-muted">
+                                        The name must be unique. If two clients have the same name then, you can append an identifier like "the day of a shoot" to make it unique.
+                                      </small>                          
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-dark">Add Client</button>
+                                </div>
+                            </form>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <a class="btn btn-light btn-lg" role="button" href="/deleteClient"><i class="fas fa-user-times"></i> Delete Client</a>
+                </div>
+            </div>
+        </div>  
+    </section>
+    </body>
+</html>    

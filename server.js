@@ -6,10 +6,12 @@ const bodyParser = require("body-parser");
 const session = require('express-session');
 let passport = require('passport');
 
-const initialize = require("./init");
+const initPassport = require("./init");
 const login = require("./login");
 const register = require("./register");
 const logout = require("./logout");
+const clients = require("./clients");
+const dbManager = require("./dbManager");
 
 const app = express();
 
@@ -28,13 +30,15 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-initialize.initDB();
-User = initialize.createUserCollection();
-passport = initialize.getPassport(passport, User);
+dbManager.initDB();
+User = dbManager.createUserCollection();
+passport = initPassport.getPassport(passport, User);
 
 login(app, passport, User);
 register(app, passport, User);
 logout(app);
+
+clients(app);
 
 app.get("/", function(req, res) {
     res.render("home")

@@ -17,7 +17,7 @@ module.exports = function(app, passport, User) {
                 if (user != null) {
                     res.render("register", {
                         errorMessage: "Usename with the same name already exists."
-                    })
+                    });
                 }
                 else {
                     res.redirect("/register");
