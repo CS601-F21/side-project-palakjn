@@ -59,6 +59,37 @@
     font-weight: bold;
   }
 
-  #passwordHelpBlock {
+  #users .container-fluid {
+    padding-left: 13%;
+    padding-right: 10%;
+  }
+
+  #users .card {
+    box-shadow: 0 0 10px 0 rgba(100, 100, 100, 0.26);
+  }
+
+  #users .card-column {
+    padding-top: 30px;
+  }
+
+  #users .card-link {
+    color: black;
+  }
+
+  #users .card-link:hover {
+    color: gray;
+  }
+
+  #users .card-title {
+    margin-bottom: 0;
+  }
+
+  #users .form-row {
     text-align: left;
+  } 
+
+  .client-info {
+    margin-bottom: 0px;
+    font-size: 15px;
+    text-align: center;
   }

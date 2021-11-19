@@ -5,24 +5,42 @@
             <div class="error">                
                 <h3><%= existClient %></h3>
             </div>
-
-            <div class="">
+            
+            <div class="card-deck">
                 <% if(clients != null && clients.length > 0) { %>
-                    <% clients.forEach(function(client) { %>
-                        <p><%=client.name%></p>
+                    <% clients.forEach(function(client) { %>    
+                        <div class="col-lg-4 card-column" style="max-width: 18rem;">                   
+                            <div class="card text-center border-dark mb-3" >
+                                <!-- <img class="card-img-top" src="..." alt="Client image"> -->
+                                <div class="card-header">                                           
+                                    <h5 class="card-title"><%= client.name %></h5>
+                                  </div>
+
+                                <div class="card-body" style="text-align: left;">   
+                                    <label style="font-weight: bold;">Date of Shoot:</label>
+                                    <p class="card-text client-info"><%= client.date.toLocaleDateString("en-US") %></p>
+                                    <label style="font-weight: bold;">Location:</label>
+                                    <p class="card-text client-info"><%= client.city + ", " + client.state + ", " + client.country + ", " + client.zip %></p>                               
+                               </div> 
+                                <div class="card-footer"> 
+                                    <% var url = "/" + client.id + "/photos"; %>                                       
+                                    <a href=<%= url %> class="btn btn-dark">Photos</a>
+                                </div>                                  
+                            </div>
+                        </div>
                   <% }) %>
                 <%}%>
             </div>
             
-            <div class="row">
+            <div class="row" style="padding-top: 30px;">
                 <div class="col-lg-6 addUser">
                     <a class="btn btn-dark btn-lg" data-toggle="modal" data-target="#askForName" role="button"><i class="fas fa-user-plus"></i> Add Client</a>
-                    
+                        
                     <div class="modal fade" id="askForName" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                            <h5 class="modal-title">Enter Client Name: </h5>
+                            <h5 class="modal-title">Enter Client Information: </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -30,10 +48,47 @@
 
                             <form action="/addClient" method="post">
                                 <div class="modal-body">
-                                    <input type="text" class="form-control" placeholder="Client Name" name="name" required="true"> 
-                                    <small id="passwordHelpBlock" class="form-text text-muted">
-                                        The name must be unique. If two clients have the same name then, you can append an identifier like "the day of a shoot" to make it unique.
-                                      </small>                          
+                                    <div class="form-row">
+                                        <div class="col-md-6 mb-3">
+                                            <label>Name*</label>
+                                            <input type="text" class="form-control" placeholder="Name" name="name" required>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label>Email*</label>
+                                            <div class="input-group">
+                                              <div class="input-group-prepend">
+                                                <span class="input-group-text" id="inputGroupPrepend3">@</span>
+                                              </div>
+                                              <input type="email" class="form-control" placeholder="Email" name="email" aria-describedby="inputGroupPrepend3" required>
+                                            </div>
+                                        </div>
+                                    </div>                                 
+                                    
+                                    <div class="form-row">
+                                        <div class="col-md-3 mb-3">
+                                            <label>City*</label>
+                                            <input type="text" class="form-control" placeholder="City" name="city" required>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <label>State*</label>
+                                            <input type="text" class="form-control" placeholder="State" name="state" required>
+                                        </div>                                        
+                                        <div class="col-md-3 mb-3">
+                                            <label>Country*</label>
+                                            <input type="text" class="form-control" placeholder="Country" name="country" required>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <label>Zip*</label>
+                                            <input type="text" class="form-control" placeholder="Zip" name="zip" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="col-md-12 mb-3">
+                                            <label>Date of photoshoot*</label>
+                                            <input type="date" class="form-control" placeholder="Date" name="date" required /> 
+                                        </div>
+                                    </div>                                                    
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
@@ -50,5 +105,6 @@
             </div>
         </div>  
     </section>
+
     </body>
 </html>    

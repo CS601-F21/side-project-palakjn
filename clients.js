@@ -28,15 +28,21 @@ module.exports = function(app) {
                     //TODO: handle error
                     console.log(err);
                 } else {
-                    if(allClients.some(client => client.name === req.body.name)) {
+                    if(allClients.some(client => client.email === req.body.email)) {
                         res.render("clients", {
-                            existClient: "Client with the name " + req.body.name + " already exists.",
+                            existClient: "Client with the email " + req.body.email + " already exists.",
                             clients: allClients
                         });
                     } else {                         
-                        const client = new Client({
+                        const client = new Client({                            
+                            userId: req.user._id,
                             name: req.body.name,
-                            userId: req.user._id
+                            email: req.body.email,
+                            city: req.body.city,
+                            state: req.body.state,
+                            country: req.body.country,
+                            zip: parseInt(req.body.zip),
+                            date: Date.parse(req.body.date)
                         });
 
                         client.save(function(err, user) {
@@ -54,4 +60,22 @@ module.exports = function(app) {
             res.redirect("/login");
         }
     });    
+
+    app.get("/:id/photos", function(req, res) {
+        if (req.isAuthenticated()) {
+            console.log(req.params.id);
+
+            Client.find({_id: {$eq: req.params.id}}, function(err, client) {
+                if(err) {
+                    //TODO: handle error
+                    console.log(err);
+                } else {
+                    console.log(client);
+                }
+            })
+            res.redirect("/dashboard");
+        } else {
+            res.redirect("/login");
+        }
+    });
 }
