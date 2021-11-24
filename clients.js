@@ -1,7 +1,12 @@
 const dbManager = require("./dbManager");
+const storage = require("./storage");
+const path = require('path');
+const fs = require('fs');
+const formidable = require('formidable');
+const uuid = require('uuid');
 
 module.exports = function(app) {
-    let Client = dbManager.createClientCollection();
+    let Client = dbManager.createClientCollection();    
 
     app.get("/clients", function(req, res) {
         if (req.isAuthenticated()) {            
@@ -33,8 +38,13 @@ module.exports = function(app) {
                             existClient: "Client with the email " + req.body.email + " already exists.",
                             clients: allClients
                         });
-                    } else {                         
-                        const client = new Client({                            
+                    } else {                           
+                        var containerName = uuid.v1();
+
+                        //Creating container in Azure Blob
+                        storage.createContainer(containerName);
+
+                        const client = new Client({                       
                             userId: req.user._id,
                             name: req.body.name,
                             email: req.body.email,
@@ -42,7 +52,8 @@ module.exports = function(app) {
                             state: req.body.state,
                             country: req.body.country,
                             zip: parseInt(req.body.zip),
-                            date: Date.parse(req.body.date)
+                            date: Date.parse(req.body.date),
+                            container: containerName
                         });
 
                         client.save(function(err, user) {
@@ -63,17 +74,50 @@ module.exports = function(app) {
 
     app.get("/:id/photos", function(req, res) {
         if (req.isAuthenticated()) {
-            console.log(req.params.id);
-
             Client.find({_id: {$eq: req.params.id}}, function(err, client) {
                 if(err) {
                     //TODO: handle error
                     console.log(err);
                 } else {
-                    console.log(client);
+                    res.render("photos", {
+                        clientInfo: client[0]
+                    });
                 }
             })
-            res.redirect("/dashboard");
+        } else {
+            res.redirect("/login");
+        }
+    });
+
+    app.post("/upload", function(req, res) {
+        if (req.isAuthenticated()) {    
+
+            var form = new formidable.IncomingForm();
+
+            const uploadFolder = path.join(__dirname, "uploads");
+            form.multiples = true;
+            form.uploadDir = uploadFolder;
+
+            form.on('fileBegin', function (name, file) {
+                file.filepath = path.join(uploadFolder, file.originalFilename); 
+            })
+
+            form.parse(req, async function (err, fields, files) {
+                if(err) {
+                    console.log(err);
+                }
+                else {                    
+                    console.log(files);
+                }
+              });            
+            
+            // form.parse(req);            
+
+            // form.on('file', function (name, file) {
+            //     console.log("Uploaded file " + file.originalFilename);
+            // })
+
+            res.redirect("/clients");
         } else {
             res.redirect("/login");
         }

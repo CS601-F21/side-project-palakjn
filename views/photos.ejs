@@ -1,0 +1,16 @@
+<%- include("partials/dashboard-header"); -%>
+
+    <section id="photos1">
+        <div class="container-fluid">
+            <h3>Photos for <%= clientInfo.name %> </h3>
+            <br>
+            <label>Select photos:</label>
+            <br>
+            <form action="/upload" method="post" enctype="multipart/form-data">                
+                <input type="file" name="upload" multiple>
+                <button type="submit" class="btn btn-dark">Submit</button>
+            </form>
+        </div>
+    </section>
+</body>
+</html>   
