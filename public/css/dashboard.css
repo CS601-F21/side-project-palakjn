@@ -93,3 +93,51 @@
     font-size: 15px;
     text-align: center;
   }
+
+/* Photos Display Section */
+  #photosSection .card-title {
+      font-family: Caveat;
+  }
+
+  #photosSection .card-image-body {
+      padding: 0rem;
+  }
+
+  #photosSection .test {
+      cursor: pointer;
+      color: white;
+  }
+
+  #photosSection .options {
+      text-align: right;
+      font-size: 1.4rem;
+  }
+
+  #photosSection .form-check-input {
+      margin-left: 0rem;
+      left: 10px;
+      top: 10px;
+  }
+
+
+  #photosSection .modal-body {
+      padding: 0rem;
+  }
+
+  #photosSection .modal-header {
+      background-color: black;
+  }
+
+/* Add Photo Section */
+  #addPhotos {
+    margin-bottom: 50px;
+  }
+
+  #addPhotos .addPhoto {
+    color: white;
+    text-align: right;
+  }
+
+  #addPhotos .photo {
+    height: 200px;
+  }
