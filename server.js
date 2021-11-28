@@ -12,6 +12,7 @@ const register = require("./register");
 const logout = require("./logout");
 const clients = require("./clients");
 const dbManager = require("./dbManager");
+const photos = require("./photos");
 
 const app = express();
 
@@ -32,13 +33,16 @@ app.use(passport.session());
 
 dbManager.initDB();
 User = dbManager.createUserCollection();
+
+let Client = dbManager.createClientCollection();  
 passport = initPassport.getPassport(passport, User);
 
 login(app, passport, User);
 register(app, passport, User);
 logout(app);
 
-clients(app);
+clients(app, Client);
+photos(app, Client);
 
 app.get("/", function(req, res) {
     res.render("home")

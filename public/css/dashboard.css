@@ -124,10 +124,6 @@
       padding: 0rem;
   }
 
-  #photosSection .modal-header {
-      background-color: black;
-  }
-
 /* Add Photo Section */
   #addPhotos {
     margin-bottom: 50px;
@@ -141,3 +137,7 @@
   #addPhotos .photo {
     height: 200px;
   }
+
+  #addPhotos .modal-header {
+    background-color: black;
+}

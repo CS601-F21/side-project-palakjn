@@ -30,10 +30,8 @@ module.exports = {
     },
 
     createBlob: async function(containerName, blobName, fileLocation) {
-        console.log('\nUploading to Azure storage as blob:\n\t', blobName);
-
-        const uploadBlobResponse = await getBlobClient(containerName, blobName).uploadFile(fileLocation);
-        console.log("Blob was uploaded successfully. requestId: ", uploadBlobResponse.requestId);
+        const uploadBlobResponse =  await getBlobClient(containerName, blobName).uploadFile(fileLocation + "\\" + blobName);   
+        console.log("Blob was uploaded successfully. requestId: ", uploadBlobResponse.requestId);     
     },
 
     getBlobs: async function(containerName) {

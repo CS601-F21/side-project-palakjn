@@ -18,7 +18,6 @@
                                             <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
                                         </a>
                                         <div class="card-img-overlay">
-                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                                             <div class="dropdown show options">
                                                 <a class="test" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i class="fas fa-ellipsis-v"></i>
@@ -86,7 +85,8 @@
                 </div>            
             <%}%>  
         </div>
-        
+    </section>
+
      <section id="addPhotos">
         <div class="container-fluid">       
             <div class="row" style="padding-top: 30px;">
@@ -97,13 +97,13 @@
                         <div class="modal-dialog  modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                            <h5 class="modal-title">Select Photos: </h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                                <h5 class="modal-title">Select Photos: </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
                             <% var url = "/" + clientInfo.id + "/upload"; %>              
-                            <form action=<%= url %> method="post" enctype="multipart/form-data"> 
+                            <form method="post" enctype="multipart/form-data" action=<%= url %> > 
                                 <div class="modal-body">
                                     <div class="form-row">
                                         <input type="file" name="upload" multiple>
