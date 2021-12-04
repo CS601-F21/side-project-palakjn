@@ -9,7 +9,8 @@ exports.initDB = function() {
     mongoose.connect("mongodb://" + process.env.DB_HOST + "/easyShare", {
         useNewUrlParser: true,
         useCreateIndex: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useFindAndModify: false
     }).then(()=>{
         console.log(`connection to database established`)
     }).catch(err=>{

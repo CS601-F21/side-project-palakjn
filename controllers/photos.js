@@ -1,3 +1,4 @@
+require('dotenv').config();
 const storage = require("../utilities/storage");
 const path = require('path');
 const fs = require('fs');
@@ -5,13 +6,14 @@ const formidable = require('formidable');
 const util = require("util");
 const unlinkFile = util.promisify(fs.unlink);
 const uuid = require('uuid');
+const mailTransporter = require("../utilities/mailHandler");
 
 upload = async function(containerName, file, directory) {
     await storage.createBlob(containerName, file, directory);
     await unlinkFile(directory + "/" + file);
 }
 
-module.exports = function(app, Client) {
+module.exports = function(app, Client, User) {
 
     app.get("/:id/photos", function(req, res) {
         if (req.isAuthenticated()) {
@@ -76,12 +78,10 @@ module.exports = function(app, Client) {
                             }
                         });
                     });
-
-                     //Delete the items from "uploads" folder
-
-                    res.redirect("/" + req.params.id + "/photos");
                 }
             })
+
+            res.redirect("/" + req.params.id + "/photos");
         } else {
             res.redirect("/login");
         }
@@ -98,11 +98,32 @@ module.exports = function(app, Client) {
                     var uniqueId = uuid.v1();
 
                     //Create URL endpoint for client
-                    let url = req.params.id + "/photos/" + uniqueId;
+                    let url = "http://localhost:3032/" + req.params.id + "/photos/" + uniqueId;
+                    let shortUrl = req.params.id + "/photos/" + uniqueId;
 
+                     //Update client table to add url
+                     Client.findByIdAndUpdate({_id: req.params.id},{"sharedUrl": shortUrl}, function(err, result){
+                        if(err){
+                            res.send(err)
+                        }
+                        else{
+                            console.log("Added shared url to the client " + req.params.id + " row. " + result);
+                        }                            
+                    });
 
+                    //Get user name from storage
+                    User.find({_id: {$eq: req.user._id}}, function(err1, user) {
+                        if(err1) {
+                            //TODO: handle error
+                            console.log(err1);
+                        } else {
+                            mailTransporter.sendMail(client[0].email, user[0].displayName, client[0].name, url);
+                        }
+                    });
                 }
-            })
+            });
+            
+            res.redirect("/" + req.params.id + "/photos");
         } else {
             res.redirect("/login");
         }

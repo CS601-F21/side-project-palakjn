@@ -42,7 +42,7 @@ register(app, passport, User);
 logout(app);
 
 clients(app, Client);
-photos(app, Client);
+photos(app, Client, User);
 
 app.get("/", function(req, res) {
     res.render("home")

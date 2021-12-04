@@ -110,7 +110,8 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <a class="btn btn-light btn-lg" role="button" href=""><i class="fas fa-share-square"></i>&nbsp; Send photos</a>
+                    <% var url = "/" + clientInfo.id + "/photos/send"; %>
+                    <a class="btn btn-light btn-lg" role="button" href="<%= url %>"><i class="fas fa-share-square"></i>&nbsp; Send photos</a>
                 </div>
             </div>
         </div>
