@@ -74,15 +74,6 @@
                     </div>
                     </div>
                 </div>
-                
-                
-                <!-- Custom Styling Toggle. For demo purposes only. -->
-                <div class="switch-wrap">
-                    <label class="switch">
-                    <input type="checkbox" id="styleSwitch" onclick="switchStyle();">
-                    <span class="slider round"></span>
-                    </label>
-                </div>            
             <%}%>  
         </div>
     </section>
@@ -91,7 +82,7 @@
         <div class="container-fluid">       
             <div class="row" style="padding-top: 30px;">
                 <div class="col-lg-6 addPhoto">
-                    <a class="btn btn-dark btn-lg" data-toggle="modal" data-target="#browsePhotos" role="button"><i class="far fa-plus-square"></i> Add Photos</a>
+                    <a class="btn btn-dark btn-lg" data-toggle="modal" data-target="#browsePhotos" role="button"><i class="far fa-plus-square"></i>&nbsp; Add Photos</a>
                         
                     <div class="modal fade" id="browsePhotos" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog  modal-dialog-centered" role="document">
@@ -102,8 +93,8 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <% var url = "/" + clientInfo.id + "/upload"; %>              
-                            <form method="post" enctype="multipart/form-data" action=<%= url %> > 
+                            <% var url = "/" + clientInfo.id + "/photos"; %>              
+                            <form method="post" enctype="multipart/form-data" action="<%= url %>" > 
                                 <div class="modal-body">
                                     <div class="form-row">
                                         <input type="file" name="upload" multiple>
@@ -119,7 +110,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <a class="btn btn-light btn-lg" role="button" href=""><i class="fas fa-trash"></i>Share photos</a>
+                    <a class="btn btn-light btn-lg" role="button" href=""><i class="fas fa-share-square"></i>&nbsp; Send photos</a>
                 </div>
             </div>
         </div>

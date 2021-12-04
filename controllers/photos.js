@@ -1,9 +1,10 @@
-const storage = require("./storage");
+const storage = require("../utilities/storage");
 const path = require('path');
 const fs = require('fs');
 const formidable = require('formidable');
 const util = require("util");
 const unlinkFile = util.promisify(fs.unlink);
+const uuid = require('uuid');
 
 upload = async function(containerName, file, directory) {
     await storage.createBlob(containerName, file, directory);
@@ -36,7 +37,7 @@ module.exports = function(app, Client) {
         }
     });
 
-    app.post("/:id/upload", function(req, res) {
+    app.post("/:id/photos", function(req, res) {
         if (req.isAuthenticated()) {   
             Client.find({_id: {$eq: req.params.id}}, function(err, client) {
                 if(err) {
@@ -79,6 +80,27 @@ module.exports = function(app, Client) {
                      //Delete the items from "uploads" folder
 
                     res.redirect("/" + req.params.id + "/photos");
+                }
+            })
+        } else {
+            res.redirect("/login");
+        }
+    });
+
+    app.get("/:id/photos/send", function(req, res) {
+        if (req.isAuthenticated()) {
+            Client.find({_id: {$eq: req.params.id}}, function(err, client) {
+                if(err) {
+                    //TODO: handle error
+                    console.log(err);
+                } else {                    
+                    //Create uniqueId
+                    var uniqueId = uuid.v1();
+
+                    //Create URL endpoint for client
+                    let url = req.params.id + "/photos/" + uniqueId;
+
+
                 }
             })
         } else {

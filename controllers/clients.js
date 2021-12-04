@@ -1,4 +1,4 @@
-const storage = require("./storage");
+const storage = require("../utilities/storage");
 const path = require('path');
 const fs = require('fs');
 const uuid = require('uuid');
@@ -23,7 +23,7 @@ module.exports = function(app, Client) {
         }
     });
 
-    app.post("/addClient", function(req, res) { 
+    app.post("/clients", function(req, res) { 
         if (req.isAuthenticated()) {             
             Client.find({userId: {$eq: req.user._id}}, function(err, allClients) {
                 if(err) {

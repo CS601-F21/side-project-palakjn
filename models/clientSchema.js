@@ -11,7 +11,8 @@ exports.getClientSchema = function() {
     state: String,
     country: String,
     zip: { type: Number },
-    date: { type: Date, default: Date.now }
+    date: { type: Date, default: Date.now },
+    sharedUrl: String
   });
   
   return clientSchema;

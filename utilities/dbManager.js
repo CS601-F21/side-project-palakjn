@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
 const findOrCreate = require('mongoose-findorcreate');
 
-const userSchema = require("./models/userSchema");
-const clientSchema = require("./models/clientSchema");
+const userSchema = require("../models/userSchema");
+const clientSchema = require("../models/clientSchema");
 
 exports.initDB = function() {
     mongoose.connect("mongodb://" + process.env.DB_HOST + "/easyShare", {

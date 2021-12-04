@@ -6,13 +6,13 @@ const bodyParser = require("body-parser");
 const session = require('express-session');
 let passport = require('passport');
 
-const initPassport = require("./init");
-const login = require("./login");
-const register = require("./register");
-const logout = require("./logout");
-const clients = require("./clients");
-const dbManager = require("./dbManager");
-const photos = require("./photos");
+const initPassport = require("./utilities/init");
+const login = require("./controllers/login");
+const register = require("./controllers/register");
+const logout = require("./controllers/logout");
+const clients = require("./controllers/clients");
+const dbManager = require("./utilities/dbManager");
+const photos = require("./controllers/photos");
 
 const app = express();
 

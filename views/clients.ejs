@@ -22,7 +22,7 @@
                                     <label style="font-weight: bold;">Location:</label>
                                     <p class="card-text client-info"><%= client.city + ", " + client.state + ", " + client.country + ", " + client.zip %></p>                               
                                </div> 
-                                <div class="card-footer"> 
+                                <div class="card-footer">                                    
                                     <% var url = "/" + client.id + "/photos"; %>                                       
                                     <a href=<%= url %> class="btn btn-dark">Photos</a>
                                 </div>                                  
@@ -46,7 +46,7 @@
                             </button>
                             </div>
 
-                            <form action="/addClient" method="post">
+                            <form action="/clients" method="post">
                                 <div class="modal-body">
                                     <div class="form-row">
                                         <div class="col-md-6 mb-3">
