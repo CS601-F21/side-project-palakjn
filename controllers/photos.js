@@ -24,14 +24,14 @@ module.exports = function(app, Client, User) {
                 } else {                    
                     //retrieve blobs from the container
 
-                    (async function(){
-                        let images = await storage.getBlobs(client[0].container);
+                    storage.getBlobs(client[0].container).then(function(images) {
+                        console.log("Got " + images.length + " images.");
+                        
                         res.render("photos", {
                             clientInfo: client[0],
                             photos: images
                         });
-                    })();
-                    
+                    });                    
                 }
             })
         } else {
@@ -99,7 +99,7 @@ module.exports = function(app, Client, User) {
 
                     //Create URL endpoint for client
                     let url = "http://localhost:3032/" + req.params.id + "/photos/" + uniqueId;
-                    let shortUrl = req.params.id + "/photos/" + uniqueId;
+                    let shortUrl = "/" + req.params.id + "/photos/" + uniqueId;
 
                      //Update client table to add url
                      Client.findByIdAndUpdate({_id: req.params.id},{"sharedUrl": shortUrl}, function(err, result){
@@ -128,4 +128,33 @@ module.exports = function(app, Client, User) {
             res.redirect("/login");
         }
     });
+
+    app.get("/:clientId/photos/:id", function(req, res) {
+        //Get Client information from DB
+        Client.find({_id: {$eq: req.params.clientId}}, function(err, client) {
+
+            //compare url where the client secret url 
+            if("/".concat(req.params.clientId).concat("/photos/").concat(req.params.id) != client[0].sharedUrl) {
+                 //if dont' match then, render a page showing a proper message
+                console.log("URL doesn't match with " + client[0].sharedUrl);
+                res.render("form", {
+                    "photos" : null,
+                    "message" : "This form is invalid. Ask the photographer to send you the new form.",
+                    "successMessage" : null,
+                    "url" : null
+                })
+            } else { //If match then,
+                storage.getBlobs(client[0].container).then(function(images) {
+                    console.log("Got " + images.length + " images.");
+
+                    res.render("form", {
+                        "photos" : images,
+                        "message" : null,
+                        "successMessage" : null,
+                        "url" : "/".concat(req.params.clientId).concat("/photos/").concat(req.params.id)
+                    });
+                });
+            }
+        });
+    });    
 }

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/form.css">
+    <title>Easy Share Form</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Arvo:ital@1&family=Caveat:wght@500&family=Cinzel&family=Josefin+Sans:wght@300&family=Lato:wght@300&family=M+PLUS+Code+Latin:wght@300&family=Montserrat&family=Orbitron&family=Roboto+Condensed:wght@300&family=Ubuntu:wght@300;400&display=swap" rel="stylesheet">
+   
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="color-background"></div>
+    <div class="form-container">
+        <div class="container-fluid">
+            <h1 class="heading">Easy Share</h1>
+            <p class="heading-subtitle">Select the photos which you want to be in the album</p>
+
+            <% if(message != null) {%>
+                <div class="failure-message-body">
+                    <p><%= message %></p>
+                </div>
+            <%}%>  
+            <% if(successMessage != null) {%>
+                <div class="success-message-body">
+                    <p><%= successMessage %></p>
+                </div>
+            <%}%>  
+            <%if(photos != null && photos.length > 0) { %>
+                <div class="photos-container">
+                    <form method="post" action="<%= url %>">                    
+                        <div class="row row-cols-1 row-cols-md-2" data-toggle="modal" data-target="#photosModal">
+                            <% for (let index = 0; index < photos.length; index++) { %> 
+                                <% let photo = photos[index]; %>
+                                <div class="col-lg-2 mb-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <img src= <%= photo.url %> class="card-img-top" alt="Client Image" data-target="#photoCarousel" data-slide-to= <%= index.toString(); %>/>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% } %> 
+                        </div>
+
+                        <div class="modal fade" id="photosModal" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <div id="photoCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+                                            <div class="carousel-inner">
+                                                <div class="carousel-item active">
+                                                    <img class="d-block w-100" src=<%= photos[0].url %> alt="slide image">
+                                                    <div class="card-img-overlay">
+                                                        <div class="round">
+                                                            <input type="checkbox" id="0" name="checkbox" value=<%= photos[0].url %>/>
+                                                            <label for="0"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <% for (let index = 1; index < photos.length; index++) { %> 
+                                                    <% let photo = photos[index]; %>
+                                                    <div class="carousel-item">
+                                                        <img class="d-block w-100" src=<%= photo.url %> alt="slide image">
+                                                        <div class="card-img-overlay">
+                                                            <div class="round">
+                                                                <input type="checkbox" id=<%= index %> name="checkbox" value=<%= photo.url %>/>
+                                                                <label for=<%= index %>></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <% } %>                                    
+                                            </div>
+                                            <div class="carouselController">
+                                                <a class="btn btn-dark" href="#photoCarousel" role="button" data-slide="prev">
+                                                    <span>Previous</span>
+                                                </a>
+                                                <a class="btn btn-dark" href="#photoCarousel" role="button" data-slide="next">
+                                                    <span>Next</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="submission-button">
+                            <button class="btn btn-dark btn-lg" type="submit">Submit</button>
+                        </div>                        
+                    </form>
+                </div>
+            <%}%>  
+        </div>
+    </div>
+</body>
+</html>
