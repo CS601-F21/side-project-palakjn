@@ -32,9 +32,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 dbManager.initDB();
-User = dbManager.createUserCollection();
-
+let User = dbManager.createUserCollection();
 let Client = dbManager.createClientCollection();  
+let Message = dbManager.createMessageCollection();
+
 passport = initPassport.getPassport(passport, User);
 
 login(app, passport, User);
@@ -42,7 +43,7 @@ register(app, passport, User);
 logout(app);
 
 clients(app, Client);
-photos(app, Client, User);
+photos(app, Client, User, Message);
 
 app.get("/", function(req, res) {
     res.render("home")

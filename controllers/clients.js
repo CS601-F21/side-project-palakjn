@@ -36,10 +36,12 @@ module.exports = function(app, Client) {
                             clients: allClients
                         });
                     } else {                           
-                        var containerName = uuid.v1();
+                        var photoContainerName = uuid.v1();
+                        var msgContainerName = uuid.v1();
 
                         //Creating container in Azure Blob
-                        storage.createContainer(containerName);
+                        storage.createContainer(photoContainerName);
+                        storage.createContainer(msgContainerName);
 
                         const client = new Client({                       
                             userId: req.user._id,
@@ -50,14 +52,16 @@ module.exports = function(app, Client) {
                             country: req.body.country,
                             zip: parseInt(req.body.zip),
                             date: Date.parse(req.body.date),
-                            container: containerName
+                            photosContainer: photoContainerName,
+                            msgContainer: msgContainerName
                         });
 
                         client.save(function(err, user) {
                             if(err) {
                                 console.error(err);
+                            } else {
+                                console.log(user.name + " saved to clients collection");
                             }
-                            console.log(user.name + " saved to clients collection");
                         });
 
                         res.redirect("/clients");

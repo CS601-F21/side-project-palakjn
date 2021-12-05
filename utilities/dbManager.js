@@ -4,6 +4,7 @@ const findOrCreate = require('mongoose-findorcreate');
 
 const userSchema = require("../models/userSchema");
 const clientSchema = require("../models/clientSchema");
+const messageSchema = require("../models/messageSchema");
 
 exports.initDB = function() {
     mongoose.connect("mongodb://" + process.env.DB_HOST + "/easyShare", {
@@ -31,4 +32,10 @@ exports.createClientCollection = function() {
     const client = clientSchema.getClientSchema();
 
     return mongoose.model("Client", client);
+}
+
+exports.createMessageCollection = function() {
+    const message = messageSchema.getMessageSchema();
+
+    return mongoose.model("Message", message);
 }

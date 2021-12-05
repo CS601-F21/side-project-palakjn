@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 exports.getClientSchema = function() {
     
   const clientSchema = new mongoose.Schema ({
-    container: String,
+    photosContainer: String,
     userId: String,
     name: String,
     email: String,
@@ -12,7 +12,8 @@ exports.getClientSchema = function() {
     country: String,
     zip: { type: Number },
     date: { type: Date, default: Date.now },
-    sharedUrl: String
+    sharedUrl: String,
+    msgContainer: String
   });
   
   return clientSchema;

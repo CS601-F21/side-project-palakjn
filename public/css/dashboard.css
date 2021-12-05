@@ -99,10 +99,6 @@
       font-family: Caveat;
   }
 
-  #photosSection .card-image-body {
-      padding: 0rem;
-  }
-
   #photosSection .test {
       cursor: pointer;
       color: white;
@@ -113,15 +109,16 @@
       font-size: 1.4rem;
   }
 
-  #photosSection .form-check-input {
-      margin-left: 0rem;
-      left: 10px;
-      top: 10px;
-  }
-
-
   #photosSection .modal-body {
       padding: 0rem;
+  }
+
+  #photosSection .card-body {
+    padding: 0px;
+}
+
+  #photosSection .card-img-top {
+    height: 150px;
   }
 
 /* Add Photo Section */
@@ -140,4 +137,4 @@
 
   #addPhotos .modal-header {
     background-color: black;
-}
+  }

@@ -6,33 +6,28 @@
             <br>
             
             <% if(photos != null && photos.length > 0) { %>
-                <div class="card-columns" data-toggle="modal" data-target="#photosModal">
-                    <div class="form-check">
-                        <% for (let index = 0; index < photos.length; index++) { %> 
-                            <% let photo = photos[index]; %>
+                <div class="row row-cols-1 row-cols-md-2" data-toggle="modal" data-target="#photosModal">                   
+                    <% for (let index = 0; index < photos.length; index++) { %> 
+                        <% let photo = photos[index]; %>
+                        <div class="col-lg-2 mb-4">
                             <div class="card">
-                                <div class="card-body card-image-body">
-                                    <div class="bg-image hover-overlay ripple shadow-1-strong rounded">
-                                        <img src= <%= photo.url %> class="card-img-top" alt="Client Image" data-target="#photoCarousel" data-slide-to= <%= index.toString(); %>/>
-                                        <a href="#!" data-mdb-toggle="modal" data-mdb-target="#photosModal1">
-                                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
-                                        </a>
-                                        <div class="card-img-overlay">
-                                            <div class="dropdown show options">
-                                                <a class="test" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-v"></i>
-                                                </a>
-                                                
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                    <a class="dropdown-item" href="#">Delete</a>
-                                                </div>
+                                <div class="card-body">
+                                    <img src= <%= photo.url %> class="card-img-top" alt="Client Image" data-target="#photoCarousel" data-slide-to= <%= index.toString(); %>/>
+                                    <div class="card-img-overlay">
+                                        <div class="dropdown show options">
+                                            <a class="test" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+                                            
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <a class="dropdown-item" href="#">Delete</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>                            
-                        <% } %>                  
-                    </div>
+                            </div> 
+                        </div>                           
+                    <% } %>  
                 </div>
                 
                 <!-- Corousal: Displaying Images in Corousal to user to get more visibilty of images -->
@@ -97,7 +92,7 @@
                             <form method="post" enctype="multipart/form-data" action="<%= url %>" > 
                                 <div class="modal-body">
                                     <div class="form-row">
-                                        <input type="file" name="upload" multiple>
+                                        <input type="file" name="uploads" multiple>
                                     </div>                                         
                                 </div>
                                 <div class="modal-footer">
