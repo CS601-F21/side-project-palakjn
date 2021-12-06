@@ -13,6 +13,7 @@ const logout = require("./controllers/logout");
 const clients = require("./controllers/clients");
 const dbManager = require("./utilities/dbManager");
 const photos = require("./controllers/photos");
+const messages = require("./controllers/messages");
 
 const app = express();
 
@@ -44,6 +45,7 @@ logout(app);
 
 clients(app, Client);
 photos(app, Client, User, Message);
+messages(app, Client, Message);
 
 app.get("/", function(req, res) {
     res.render("home")

@@ -138,3 +138,40 @@
   #addPhotos .modal-header {
     background-color: black;
   }
+
+/* UnRead/Read Messages display */
+
+  #messages .message-container {    
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+
+  #messages .nav-link {
+    font-size: 1.2rem;
+    font-family: "Montserrat-Light";
+    color: black;
+  }
+
+  #messages .nav-link .active {
+    font-size: 1.2rem;
+    font-family: "Montserrat-Light";
+    color: black;
+  }
+
+  #message-container .container-fluid{
+    padding: 2% 2% 0% 2%;
+  }
+
+  #messages .see-button {
+    text-align: right;
+    padding: 0px;
+    box-shadow: 0 0 5px 0 rgba(8, 8, 8, 0.753);
+  }
+
+  #messages .see-button:hover {
+    background-color: grey;
+  }
+
+  #messages .see-button .card-body {
+    padding: 0.5rem;
+  }

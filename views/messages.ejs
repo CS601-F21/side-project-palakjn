@@ -1,0 +1,42 @@
+<%- include("partials/dashboard-header"); -%>
+
+        <section id="messages">
+            <div class="container-fluid">
+                <div class="card message-container">
+                    <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <% if(!read) {%>
+                                <a class="nav-link active" href="/messages/unread">Unread</a>
+                            <%} else {%>
+                                <a class="nav-link" href="/messages/unread">Unread</a>
+                            <%}%>
+                        </li>
+                        <li class="nav-item">
+                            <% if(!read) {%>                                
+                                <a class="nav-link" href="/messages/read">Read</a>
+                            <%} else {%>                                
+                                <a class="nav-link active" href="/messages/read">Read</a>
+                            <%}%>
+                        </li>
+                    </ul>
+                    </div>
+                    <div class="card-body" id="message-container">
+                        <div class="container-fluid">
+                            <% messages.forEach(message => { %>
+                                <div class="card border-dark mb-3 message-body">
+                                    <% let url = "/messages/".concat(message.id); %>
+                                    <a class="btn btn-outline-dark btn-lg see-button" role="button" href="<%= url %>">                                
+                                        <div class="card-body text-center">
+                                            Received response from the client "<%= message.clientName %>" [<%= message.email %>]                           
+                                        </div>
+                                    </a>
+                                </div>
+                            <% }) %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>   
