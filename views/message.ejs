@@ -25,7 +25,8 @@
                             <%}%>    
                         </div>
                         <div class="submission-button">
-                            <button class="btn btn-dark btn-lg">Download</button>
+                            <% let url = "/messages/" + message.id + "/download"; %>
+                            <a class="btn btn-dark btn-lg" href="<%= url %>">Download</a>
                         </div>
 
                         <div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-hidden="true">

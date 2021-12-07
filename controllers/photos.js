@@ -1,4 +1,3 @@
-require('dotenv').config();
 const storage = require("../utilities/storage");
 const path = require('path');
 const fs = require('fs');

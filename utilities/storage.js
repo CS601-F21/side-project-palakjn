@@ -1,5 +1,6 @@
 require('dotenv').config();
 const { BlobServiceClient } = require("@azure/storage-blob");
+const StringBuffer  = require("./stringHandler");
 
 getContainerClient = function(containerName) {    
     // Create the BlobServiceClient object which will be used to create a container client
@@ -14,7 +15,27 @@ getBlobClient = function(containerName, blobName) {
 }
 
 getBlobUrl = function(containerName, blobName) {
-    return process.env.AZURE_URL + containerName + "/" + blobName + process.env.SAS_TOKEN;
+    var buffer = new StringBuffer();
+    buffer.append(process.env.AZURE_URL);
+    buffer.append(containerName);
+    buffer.append("/");
+    buffer.append(blobName);
+    buffer.append(process.env.SAS_TOKEN);
+
+    return buffer.toString();
+}
+
+streamToBuffer = async function(readableStream) {
+    return new Promise((resolve, reject) => {
+      const chunks = [];
+      readableStream.on("data", (data) => {
+        chunks.push(data instanceof Buffer ? data : Buffer.from(data));
+      });
+      readableStream.on("end", () => {
+        resolve(Buffer.concat(chunks));
+      });
+      readableStream.on("error", reject);
+    });
 }
 
 module.exports = {    
@@ -48,10 +69,17 @@ module.exports = {
         return allBlobs;
     },
 
-    downloadBlob: async function(containerName, fileLocation, blobName) {
+    downloadBlobToFile: async function(containerName, fileLocation, blobName) {
         let containerClient = getContainerClient(containerName);
 
         const uploadBlobResponse =  await getBlobClient(containerName, blobName).downloadToFile(fileLocation + "\\" + blobName);
-        console.log("Blob was uploaded successfully. requestId: ", uploadBlobResponse.requestId); 
+        console.log("Blob was downloaded successfully. requestId: ", uploadBlobResponse.requestId); 
+    },
+
+    downloadBlobToBuffer: async function(containerName, blobName) {
+        let containerClient = getContainerClient(containerName);
+
+        const downloadBlockBlobResponse = await getBlobClient(containerName, blobName).download();
+        return await streamToBuffer(downloadBlockBlobResponse.readableStreamBody);
     }
 }
