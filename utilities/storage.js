@@ -46,5 +46,12 @@ module.exports = {
         }
 
         return allBlobs;
+    },
+
+    downloadBlob: async function(containerName, fileLocation, blobName) {
+        let containerClient = getContainerClient(containerName);
+
+        const uploadBlobResponse =  await getBlobClient(containerName, blobName).downloadToFile(fileLocation + "\\" + blobName);
+        console.log("Blob was uploaded successfully. requestId: ", uploadBlobResponse.requestId); 
     }
 }

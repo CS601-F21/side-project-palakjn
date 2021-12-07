@@ -175,3 +175,50 @@
   #messages .see-button .card-body {
     padding: 0.5rem;
   }
+
+/* Particular Message display */
+
+  #message-section .container-fluid {
+    padding: 2% 15% 0% 15%;
+  }
+
+  #message-section .photos-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 20px;
+    border-style: solid;
+  }
+
+  #message-section .back-button {
+    padding-bottom: 20px;
+  }
+
+  #message-section .back-button-icon {
+    color: black;
+    font-size: 1.8rem;
+  }
+
+  #message-section .heading {
+    text-align: center;
+  }
+
+  #message-section .card-body {
+    padding: 0px;
+  }
+
+  #message-section .card-img-top {
+    height: 150px;
+  }
+
+  #message-section .modal-body {
+    padding: 0rem;
+  }
+
+  #message-section .submission-button {
+    text-align: center;
+  }
+
+  #message-section .submission-button {
+    padding-top: 50px;
+    padding-bottom: 20px;
+  }

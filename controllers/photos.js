@@ -152,7 +152,6 @@ module.exports = function(app, Client, User, Message) {
             let photos = req.body.checkbox;  
 
             const uploadFolder = path.join(__dirname, "../selected");
-            console.log(uploadFolder);
 
             var fileName = req.params.id + ".txt";
             let isSuccess = true;
@@ -163,7 +162,7 @@ module.exports = function(app, Client, User, Message) {
                 //Creating a local file and storing all the selected photos URLs there.
                 photos.forEach(photo => {                
                     try {
-                        fs.appendFileSync(path.join(uploadFolder, fileName), photo.concat("\r\n"), 'utf8');
+                        fs.appendFileSync(path.join(uploadFolder, fileName), photo.slice(0, -1).concat("\r\n"), 'utf8');
                     } catch (err) {
                         console.log("Error while appending line " + photo + " to the file. " + err);
                         isSuccess = false;
@@ -173,7 +172,7 @@ module.exports = function(app, Client, User, Message) {
             } else {
                 //Single photo 
                 try {
-                    fs.appendFileSync(path.join(uploadFolder, fileName), photos.concat("\r\n"), 'utf8');
+                    fs.appendFileSync(path.join(uploadFolder, fileName), photos.slice(0, -1).concat("\r\n"), 'utf8');
                 } catch (err2) {
                     console.log("Error while appending line " + photos + " to the file. " + err2);
                     isSuccess = false;
