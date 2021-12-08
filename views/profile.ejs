@@ -1,0 +1,143 @@
+<%- include("partials/dashboard-header"); -%>
+
+        <section id="userProfile">
+            <div class="color-background" ></div>
+            <div class="profile-container">
+                <div class="container-fluid">
+                    <div class="row flex-grow-1">
+                        <div class="col-lg-6" id="profile-pic">
+                            <img class="user-image" src="images/profile-image.jfif" alt="profile" />
+                        </div>
+                        <div class="col-lg-6" id="profile-details">
+                            <div>
+                                <h1 class="profile-name"><%= user.displayName %></h1>
+                            </div>
+                            <div class="profile-info">
+                                <% let phone = ""; %>
+                                <% if(user.phone) { %>
+                                    <% phone = phone.concat('+').concat(user.phone); %>
+                                <%}%>
+                                <p><i class="fas fa-phone-alt"></i> <%= phone %></p>
+                                <p><i class="far fa-envelope"></i> <%= user.username %></p>
+                                <% let address = ""; %>
+                                <% if(user.address) { %>
+                                    <% address = address.concat(user.address); %>
+                                <%}%>
+                                <% if(user.city) { %>
+                                    <% address = address.concat(user.city); %>
+                                <%}%>
+                                <% if(user.state) { %>
+                                    <% address = address.concat(user.state); %>
+                                <%}%>
+                                <% if(user.country) { %>
+                                    <% address = address.concat(user.country); %>
+                                <%}%>
+                                <% if(user.zip) { %>
+                                    <% address = address.concat(user.zip.toString()); %>
+                                <%}%>
+                                <p><i class="fas fa-map-marker-alt"></i> <%= address %></p>
+                            </div>
+                            <div class="card-img-overlay">
+                                <a type="button" class="profile-edit-icon" data-toggle="modal" data-target="#askForUpdate"><i class="fas fa-user-edit"></i></a>
+
+                                <div class="modal fade" id="askForUpdate" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" style="font-weight: bold;">Update User Details: </h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                    
+                                            <form action="" method="put">
+                                                <div class="modal-body">
+                                                    <div class="form-row">
+                                                        <div class="col-md-6 mb-3">
+                                                            <label>Name</label>
+                                                            <input type="text" class="form-control" placeholder="Name" name="name" value="<%= user.displayName %>" required>
+                                                        </div>
+                                                        <div class="col-md-6 mb-3">
+                                                            <label>Phone Number</label>
+                                                            <div class="row" style="text-align: right;">
+                                                                <% let countryCode = ''; %>
+                                                                <% let areaCode = ''; %>
+                                                                <% let exchangeCode = ''; %>
+                                                                <% let lineNumber= '';%>
+                                                                <% if(phone) { %>
+                                                                    <% var phoneCodes = phone.split("-"); %>
+                                                                    <% if(phoneCodes && phoneCodes.length == 4) { %>
+                                                                        <% countryCode = phoneCodes[0]; %>
+                                                                        <% areaCode = phoneCodes[1]; %>
+                                                                        <% exchangeCode = phoneCodes[2]; %>
+                                                                        <% lineNumber = phoneCodes[3]; %>
+                                                                    <% } %>
+                                                                <% } %>
+                                                                <div class="col-md-2" style="padding-right: 1px;">
+                                                                    <input type="text" class="form-control" style="text-align: center;" size="2" maxlength="2" pattern="[0-9]{1,2}" name="countryCode" value="<%= countryCode %>" title="Country Code" required/>
+                                                                </div>
+                                                                <span style="text-align: center; padding-top: 5px;">&nbsp;-&nbsp;</span>
+                                                                <div class="col-md-2"  style="padding-left: 1px; padding-right: 1px;">
+                                                                <input type="text" class="form-control" style="text-align: center;" size="3" maxlength="3" pattern="[0-9]{3}" name="areaCode" value="<%= areaCode %>" title="Area Code" required/>
+                                                                </div>
+                                                                <span style="text-align: center; padding-top: 5px;">&nbsp;-&nbsp;</span>
+                                                                <div class="col-md-3"  style="padding-left: 1px; padding-right: 1px;">
+                                                                <input type="text" class="form-control" style="text-align: center;" size="3" maxlength="3" pattern="[0-9]{3}" name="exchangeCode" value="<%= exchangeCode %>" title="Exchange Code" required/>
+                                                                </div>
+                                                                <span style="text-align: center; padding-top: 5px;">&nbsp;-&nbsp;</span>
+                                                                <div class="col-md-3"  style="padding-left: 1px;">
+                                                                <input type="text" class="form-control" style="text-align: center;" th:size="4" th:maxlength="4" pattern="[0-9]{4}" name="lineNumber" value="<%= lineNumber %>" title="Line Number" required/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-row">
+                                                        <div class="col-md-12 mb-3">
+                                                            <label>Address</label>
+                                                            <input type="text" class="form-control" placeholder="Address" name="address" value="<%= user.address %>" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-row">
+                                                        <div class="col-md-3 mb-3">
+                                                            <label>City</label>
+                                                            <input type="text" class="form-control" placeholder="City" name="city" value="<%= user.city %>" required>
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <label>State</label>
+                                                            <input type="text" class="form-control" placeholder="State" name="state" value="<%= user.state %>" required>
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <label>Country</label>
+                                                            <input type="text" class="form-control" placeholder="Country" name="country" value="<%= user.country %>" required>
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <label>Zip</label>
+                                                            <input type="text" class="form-control" placeholder="Zip" name="zip" value="<%= user.zip %>" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-dark" id="updateProfile" style="color: white; font-weight: bold;">Update</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <script type="text/javascript">
+            $("button[id='photo-update-image']").click(function() {
+                $("input[id='my_file']").click();
+            });
+
+            document.getElementById("date").defaultValue = "1992-05-29";
+        </script>
+
+    </body> 
+</html>

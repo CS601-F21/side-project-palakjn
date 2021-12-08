@@ -222,3 +222,60 @@
     padding-top: 50px;
     padding-bottom: 20px;
   }
+
+/* User profile */
+
+  #userProfile .color-background {
+    height:550px; 
+    width:100%; 
+    background-color: black;
+  }
+
+  #userProfile .container-fluid{
+    padding: 5px;
+  }
+
+  #userProfile .profile-container {
+    position: absolute;
+    margin-left: 10%;
+    padding: 0px;
+    margin-right: 20%;
+    top: 200px;
+    width: 80%;
+    background-color: white;
+    border-style: solid;
+    border-color: black;
+  }
+
+  #userProfile .user-image {
+      width: 100%;
+      height: 900px;
+      border-radius: 5px;
+  }
+
+  #userProfile .profile-name {
+    font-family: 'Gallient';
+    font-size: 8rem;
+  }
+
+  #userProfile #profile-details {
+    padding: 2%;
+  }
+
+  #profile-details .card-img-overlay {
+    float: right;
+  }
+
+  #userProfile .profile-edit-icon {
+    float: right;
+    padding-right: 10px;
+    font-size: 1.5rem;
+  }
+
+  #userProfile .profile-info {
+    font-size: 30px;
+    height: 650px; 
+    width: 100%; 
+    display: table-cell;
+    vertical-align: middle;
+  }

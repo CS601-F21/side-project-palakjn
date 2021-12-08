@@ -154,7 +154,6 @@ module.exports = function(app, Client, Message) {
                 }
             }
 
-            // res.redirect("/messages/" + req.params.id);
         } else {
             res.redirect("/login");
         }

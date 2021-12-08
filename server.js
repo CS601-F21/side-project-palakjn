@@ -14,6 +14,7 @@ const clients = require("./controllers/clients");
 const dbManager = require("./utilities/dbManager");
 const photos = require("./controllers/photos");
 const messages = require("./controllers/messages");
+const profile = require("./controllers/profile");
 
 const app = express();
 
@@ -46,6 +47,7 @@ logout(app);
 clients(app, Client);
 photos(app, Client, User, Message);
 messages(app, Client, Message);
+profile(app, User);
 
 app.get("/", function(req, res) {
     res.render("home")
