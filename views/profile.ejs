@@ -22,18 +22,22 @@
                                 <% let address = ""; %>
                                 <% if(user.address) { %>
                                     <% address = address.concat(user.address); %>
+                                    <% address = address.concat(', '); %>
                                 <%}%>
                                 <% if(user.city) { %>
                                     <% address = address.concat(user.city); %>
+                                    <% address = address.concat(', '); %>
                                 <%}%>
                                 <% if(user.state) { %>
                                     <% address = address.concat(user.state); %>
+                                    <% address = address.concat(', '); %>
                                 <%}%>
                                 <% if(user.country) { %>
                                     <% address = address.concat(user.country); %>
+                                    <% address = address.concat(', '); %>
                                 <%}%>
                                 <% if(user.zip) { %>
-                                    <% address = address.concat(user.zip.toString()); %>
+                                    <% address = address.concat(user.zip); %>
                                 <%}%>
                                 <p><i class="fas fa-map-marker-alt"></i> <%= address %></p>
                             </div>
@@ -50,7 +54,7 @@
                                                 </button>
                                             </div>
                     
-                                            <form action="" method="put">
+                                            <form action="/profile" method="post">
                                                 <div class="modal-body">
                                                     <div class="form-row">
                                                         <div class="col-md-6 mb-3">
@@ -67,7 +71,7 @@
                                                                 <% if(phone) { %>
                                                                     <% var phoneCodes = phone.split("-"); %>
                                                                     <% if(phoneCodes && phoneCodes.length == 4) { %>
-                                                                        <% countryCode = phoneCodes[0]; %>
+                                                                        <% countryCode = phoneCodes[0].replace('+', ''); %>
                                                                         <% areaCode = phoneCodes[1]; %>
                                                                         <% exchangeCode = phoneCodes[2]; %>
                                                                         <% lineNumber = phoneCodes[3]; %>
@@ -112,7 +116,7 @@
                                                         </div>
                                                         <div class="col-md-3 mb-3">
                                                             <label>Zip</label>
-                                                            <input type="text" class="form-control" placeholder="Zip" name="zip" value="<%= user.zip %>" required>
+                                                            <input type="text" class="form-control" placeholder="Zip" name="zip" pattern="[0-9]*" value="<%= user.zip %>" required>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -13,6 +13,7 @@ exports.getUserSchema = function() {
     city: String,
     state: String,
     country: String,
+    zip: String,
     phone: String,
   });
   
