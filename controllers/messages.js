@@ -12,7 +12,7 @@ module.exports = function(app, Client, Message) {
         if (req.isAuthenticated()) {            
             var messages = [];
 
-            var msgs = await Message.find({read: false});
+            var msgs = await Message.find({read: false, userId: req.user._id});
 
             if(msgs.length > 0) {
                 console.log("Got " + msgs.length + " messages");
@@ -32,7 +32,8 @@ module.exports = function(app, Client, Message) {
 
             res.render("messages", {
                 "read": false,
-                "messages": messages
+                "messages": messages,
+                googleUser: req.user.googleId ? true : false
             })
         } else {
             res.redirect("/login");
@@ -43,7 +44,7 @@ module.exports = function(app, Client, Message) {
         if (req.isAuthenticated()) {            
             var messages = [];
 
-            var msgs = await Message.find({read: true});
+            var msgs = await Message.find({read: true, userId: req.user._id});
 
             if(msgs.length > 0) {
                 console.log("Got " + msgs.length + " messages");
@@ -63,7 +64,8 @@ module.exports = function(app, Client, Message) {
 
             res.render("messages", {
                 "read": true,
-                "messages": messages
+                "messages": messages,
+                googleUser: req.user.googleId ? true : false
             })
         } else {
             res.redirect("/login");
@@ -103,7 +105,8 @@ module.exports = function(app, Client, Message) {
                                 "name": client.name,
                                 "email": client.email,
                                 "photos": photos
-                            }
+                            },
+                            googleUser: req.user.googleId ? true : false
                         });
                     });                    
                 }

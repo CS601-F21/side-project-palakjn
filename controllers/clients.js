@@ -14,7 +14,8 @@ module.exports = function(app, Client) {
                 } else {                
                     res.render("clients", {
                         existClient: "",
-                        clients: allClients
+                        clients: allClients,
+                        googleUser: req.user.googleId ? true : false
                     });
                 }
             });
@@ -33,7 +34,8 @@ module.exports = function(app, Client) {
                     if(allClients.some(client => client.email === req.body.email)) {
                         res.render("clients", {
                             existClient: "Client with the email " + req.body.email + " already exists.",
-                            clients: allClients
+                            clients: allClients,
+                            googleUser: req.user.googleId ? true : false
                         });
                     } else {                           
                         var photoContainerName = uuid.v1();

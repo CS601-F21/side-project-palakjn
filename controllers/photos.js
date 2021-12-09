@@ -30,7 +30,8 @@ module.exports = function(app, Client, User, Message) {
                         
                         res.render("photos", {
                             clientInfo: client[0],
-                            photos: images
+                            photos: images,
+                            googleUser: req.user.googleId ? true : false
                         });
                     });                    
                 }

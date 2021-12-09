@@ -9,9 +9,10 @@ module.exports = function(app, User) {
                     //TODO: handle error
                     console.log(err);
                 } else {    
-                    if(user.length == 1) {     
+                    if(user.length == 1) {   
                         res.render("profile", {
-                            "user": user[0]
+                            user: user[0],
+                            googleUser: req.user.googleId ? true : false
                         });  
                     } else {
                         //TODO: Handle error

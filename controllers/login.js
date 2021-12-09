@@ -62,8 +62,49 @@ module.exports = function(app, passport, User) {
     app.get("/dashboard", function(req, res) {
         if (req.isAuthenticated()) {
             res.render("dashboard", {
-                displayName: req.user.displayName
+                displayName: req.user.displayName,
+                googleUser: req.user.googleId ? true : false
             });
+        } else {
+            res.redirect("/login");
+        }
+    });
+
+    app.get("/changepassword", function(req, res) {
+        if(req.isAuthenticated()) {
+            res.render("changepassword", {
+                googleUser: req.user.googleId ? true : false,
+                error: null
+            });
+        } else {
+            res.redirect("/login");
+        }
+    });
+
+    app.post("/changepassword", async function(req, res) {
+        if(req.isAuthenticated()) {
+            let user = await User.findById({_id: req.user._id});
+
+            user.changePassword(req.body.oldpassword, req.body.newpassword, function(err) {
+                if(err) {
+                    //TODO: Report error in UI
+                    console.log("Unable to change the password. " + err);
+                    let errorMessage = null;
+
+                    if(err == "IncorrectPasswordError: Password or username is incorrect") {
+                        errorMessage = "Old password is incorrect";
+                    }
+
+                    res.render("changepassword", {
+                        googleUser: req.user.googleId ? true : false,
+                        error: errorMessage
+                    });
+                } else {
+                    console.log("Changed Password successfully");
+
+                    res.redirect("/dashboard");
+                }
+            });    
         } else {
             res.redirect("/login");
         }
