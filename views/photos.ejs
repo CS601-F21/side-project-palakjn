@@ -115,13 +115,15 @@
                                 <% var url = "/" + clientInfo.id + "/photos"; %>              
                                 <form method="post" enctype="multipart/form-data" action="<%= url %>" > 
                                     <div class="modal-body">
-                                        <div class="form-row">
-                                            <input type="file" name="uploads" multiple>
-                                        </div>                                         
+                                        <div class="d-flex justify-content-center">
+                                            <input type="file" class="form-control-file" style="width: 120px;" name="uploads" accept=".jpeg, .jpg, .png, .tiff, .jfif" multiple>
+                                        </div>          
+                                        
+                                        <p class="text-muted" style="margin-left: -20px; margin-top: 10px; margin-bottom: 0px;">*Only files with the extension .jpeg, .jpg, .png, .tiff, .jfif are accepted</p>                               
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-dark">Upload</button>
+                                        <button type="submit" id="upload-image-button" class="btn btn-dark">Upload</button>
                                     </div>
                                 </form>
                             </div>
@@ -140,5 +142,17 @@
             </div>
         </section>
     <% } %>
+
+    <script>
+        $(function(){
+           $("#upload-image-button").click(function(e){
+              var $fileUpload = $("input[type='file']");
+              if (parseInt($fileUpload.get(0).files.length) > 10){
+                 alert("You are only allowed to upload a maximum of 10 files");
+                 e.preventDefault();
+              }
+           });
+        });
+    </script>
 </body>
 </html>   
