@@ -20,10 +20,21 @@ module.exports = function(app, Client, User, Message) {
         if (req.isAuthenticated()) {
             Client.find({_id: {$eq: req.params.id}}, function(err, client) {
                 if(err) {
-                    //TODO: handle error
                     console.log(err);
+
+                    res.render("photos", {
+                        clientInfo: null,
+                        photos: null,
+                        googleUser: req.user.googleId ? true : false,
+                        success: null,
+                        failure: "Server error. Try again"
+                    });
                 } else {                    
                     //retrieve blobs from the container
+                    var success = req.session.success;
+                    var failure = req.session.failure;
+                    req.session.success = null;
+                    req.session.failure = null;
 
                     storage.getBlobs(client[0].photosContainer).then(function(images) {
                         console.log("Got " + images.length + " images.");
@@ -31,7 +42,9 @@ module.exports = function(app, Client, User, Message) {
                         res.render("photos", {
                             clientInfo: client[0],
                             photos: images,
-                            googleUser: req.user.googleId ? true : false
+                            googleUser: req.user.googleId ? true : false,
+                            success: success,
+                            failure: failure
                         });
                     });                    
                 }
@@ -42,11 +55,14 @@ module.exports = function(app, Client, User, Message) {
     });
 
     app.post("/:id/photos", upload.array("uploads", 10), function(req, res) {
-        if (req.isAuthenticated()) {   
+        if (req.isAuthenticated()) {  
+
             Client.find({_id: {$eq: req.params.id}}, function(err, client) {
                 if(err) {
-                    //TODO: handle error
                     console.log(err);
+                    req.session.success = null;
+                    req.session.failure = "Server error. Try again later!";
+                    res.redirect("/" + req.params.id + "/photos");
                 } else {                    
                     //first saving photos in local
 
@@ -57,18 +73,23 @@ module.exports = function(app, Client, User, Message) {
                     // Loop through all the files in the uploads directory
                     fs.readdir(uploadFolder, function (err, files) {
                         if (err) {
-                            //TODO: handle error
                             console.error("Could not list the directory.", err);
+                            
+                            req.session.success = null;
+                            req.session.failure = "Server error. Try again later!";
+                            res.redirect("/" + req.params.id + "/photos");
                         } else {
                             files.forEach(function (file, index) {
                                 uploadBlob(client[0].photosContainer, file, uploadFolder);                         
                             });
+
+                            req.session.success = "Uploading.....";
+                            req.session.failure = null;
+                            res.redirect("/" + req.params.id + "/photos");
                         }
                     });
                 }
-            })
-
-            res.redirect("/" + req.params.id + "/photos");
+            });            
         } else {
             res.redirect("/login");
         }
@@ -76,10 +97,14 @@ module.exports = function(app, Client, User, Message) {
 
     app.get("/:id/photos/send", function(req, res) {
         if (req.isAuthenticated()) {
+
             Client.find({_id: {$eq: req.params.id}}, function(err, client) {
                 if(err) {
-                    //TODO: handle error
-                    console.log(err);
+                    console.log("Error while getting client information. Error:" + err);
+
+                    req.session.success = null;
+                    req.session.failure = "Server error. Try again later!";
+                    res.redirect("/" + req.params.id + "/photos");
                 } else {                    
                     //Create uniqueId
                     var uniqueId = uuid.v1();
@@ -89,29 +114,45 @@ module.exports = function(app, Client, User, Message) {
                     let shortUrl = "/" + req.params.id + "/photos/" + uniqueId;
 
                      //Update client table to add url
-                     Client.findByIdAndUpdate({_id: req.params.id},{"sharedUrl": shortUrl}, function(err2, result){
-                        if(err2){
-                            //TODO: Handle the error
-                            console.log(err2);
+                     Client.findByIdAndUpdate({_id: req.params.id},{"sharedUrl": shortUrl}, function(err, result){
+                        if(err){
+                            console.log("Error while updating client information. Error:" + err);
+
+                            req.session.success = null;
+                            req.session.failure = "Server error. Try again later!";
+                            res.redirect("/" + req.params.id + "/photos");
                         }
                         else{
                             console.log("Added shared url to the client " + req.params.id + " information.");
-                        }                            
-                    });
 
-                    //Get user name from storage
-                    User.find({_id: {$eq: req.user._id}}, function(err1, user) {
-                        if(err1) {
-                            //TODO: handle error
-                            console.log(err1);
-                        } else {
-                            mailTransporter.sendMail(client[0].email, user[0].displayName, client[0].name, url);
-                        }
-                    });
+                            //Get user name from storage
+                            User.find({_id: {$eq: req.user._id}}, function(err, user) {
+                                if(err) {
+                                    console.log("Error while finding user information. Error:" + err);
+
+                                    req.session.success = null;
+                                    req.session.failure = "Server error. Try again later!";
+                                    res.redirect("/" + req.params.id + "/photos");
+                                } else {
+                                    mailTransporter.sendMail(client[0].email, user[0].displayName, client[0].name, url).then((mailResponse) => {
+                                        console.log(mailResponse);
+
+                                        req.session.success = "Email Sent";
+                                        req.session.failure = null;
+                                        res.redirect("/" + req.params.id + "/photos");
+                                    }).catch((error) => {
+                                        console.log("Error while sending mail. Error: " + error);
+
+                                        req.session.success = null;
+                                        req.session.failure = "Error while sending mail!";
+                                        res.redirect("/" + req.params.id + "/photos");
+                                    });
+                                }
+                            });
+                        }                            
+                    });                    
                 }
-            });
-            
-            res.redirect("/" + req.params.id + "/photos");
+            });            
         } else {
             res.redirect("/login");
         }

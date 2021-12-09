@@ -5,7 +5,6 @@ getSubject = function() {
     return "Your photos are ready!"
 }
 
-
 getMailBody = function(userName, clientName, link) {
     var message = "Hello " + clientName + ",\n\n";
     message = message.concat("We hope you are having a productive day.\n\n");
@@ -23,7 +22,7 @@ getMailBody = function(userName, clientName, link) {
 module.exports = {
     //Reference: https://dev.to/sudarshansb143/send-mail-using-node-js-and-gmail-in-few-simple-steps-4n79
 
-    sendMail: function (email, userName, clientName, link) {
+    sendMail: async function (email, userName, clientName, link) {
         let mailTransporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
             port: 587,
@@ -31,9 +30,7 @@ module.exports = {
                 user: process.env.GMAIL_USERNAME,
                 pass: process.env.GMAIL_PASSWORD,
             },
-        });
-
-        mailTransporter.verify().then(console.log).catch(console.error);
+        });        
 
         let mailDetails = {
             from: process.env.GMAIL_USERNAME,
@@ -42,12 +39,6 @@ module.exports = {
             text: getMailBody(userName, clientName, link),
         };
 
-        mailTransporter.sendMail(mailDetails, function (err, data) {
-            if (err) {
-                console.log("Error Occurs. " + err);
-            } else {
-                console.log("Email sent successfully. " + data);
-            }
-        });
+        return await mailTransporter.sendMail(mailDetails);
     }    
 };
