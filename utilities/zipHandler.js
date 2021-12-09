@@ -20,7 +20,7 @@ module.exports = {
 
             let buff = await storage.downloadBlobToBuffer(containerName, blobName);
             if(buff) {
-                zip.addFile(blobName + ".png", buff);
+                zip.addFile(blobName, buff);
             }    
 
             zip.writeZip(filePath);

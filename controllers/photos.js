@@ -1,4 +1,4 @@
-const storage = require("../utilities/storage");
+const azureStorage = require("../utilities/storage");
 const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
@@ -7,10 +7,19 @@ const unlinkFile = util.promisify(fs.unlink);
 const uuid = require('uuid');
 const mailTransporter = require("../utilities/mailHandler");
 
-const upload = multer({ dest: 'uploads/' })
+var storage = multer.diskStorage(
+    {
+        destination: 'uploads/',
+        filename: function ( req, file, cb ) {
+            cb( null, uuid.v1() + path.extname(file.originalname));
+        }
+    }
+);
+
+var upload = multer( { storage: storage } );
 
 uploadBlob = async function(containerName, file, directory) {
-    await storage.createBlob(containerName, file, directory);
+    await azureStorage.createBlob(containerName, file, directory);
     await unlinkFile(directory + "/" + file);
 }
 
@@ -36,7 +45,7 @@ module.exports = function(app, Client, User, Message) {
                     req.session.success = null;
                     req.session.failure = null;
 
-                    storage.getBlobs(client[0].photosContainer).then(function(images) {
+                    azureStorage.getBlobs(client[0].photosContainer).then(function(images) {
                         console.log("Got " + images.length + " images.");
                         
                         res.render("photos", {
@@ -125,7 +134,7 @@ module.exports = function(app, Client, User, Message) {
                         else{
                             console.log("Added shared url to the client " + req.params.id + " information.");
 
-                            //Get user name from storage
+                            //Get user name from db
                             User.find({_id: {$eq: req.user._id}}, function(err, user) {
                                 if(err) {
                                     console.log("Error while finding user information. Error:" + err);
@@ -173,7 +182,7 @@ module.exports = function(app, Client, User, Message) {
                     "url" : null
                 })
             } else { //If match then,
-                storage.getBlobs(client[0].photosContainer).then(function(images) {
+                azureStorage.getBlobs(client[0].photosContainer).then(function(images) {
                     console.log("Got " + images.length + " images.");
 
                     res.render("form", {
