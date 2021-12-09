@@ -1,6 +1,6 @@
 <%- include("partials/dashboard-header"); -%>
 
-    <section id="users">
+    <section id="clients">
         <div class="container-fluid">
             <div class="error">                
                 <h3><%= existClient %></h3>
@@ -11,9 +11,24 @@
                     <% clients.forEach(function(client) { %>    
                         <div class="col-lg-4 card-column" style="max-width: 18rem;">                   
                             <div class="card text-center border-dark mb-3" >
-                                <!-- <img class="card-img-top" src="..." alt="Client image"> -->
-                                <div class="card-header">                                           
-                                    <h5 class="card-title"><%= client.name %></h5>
+                                <div class="card-header">    
+                                    <div class="row">
+                                        <div class="col-lg-10">                                
+                                            <h5 class="card-title"><%= client.name %></h5>
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <div class="dropdown show options">
+                                                <a class="card-dropdown-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </a>
+                    
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    <% var deleteUrl = "/clients/" + client.id + "/delete"; %>  
+                                                    <a class="dropdown-item" href="<%= deleteUrl %>">Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>  
                                   </div>
 
                                 <div class="card-body" style="text-align: left;">   
@@ -30,14 +45,13 @@
                         </div>
                   <% }) %>
                 <%}%>
-            </div>
+            </div>            
             
-            <div class="row" style="padding-top: 30px;">
-                <div class="col-lg-6 addUser">
-                    <a class="btn btn-dark btn-lg" data-toggle="modal" data-target="#askForName" role="button"><i class="fas fa-user-plus"></i> Add Client</a>
-                        
-                    <div class="modal fade" id="askForName" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="addUser" style="padding-top: 30px;">
+                <a class="btn btn-dark btn-lg" data-toggle="modal" data-target="#askForName" role="button"><i class="fas fa-user-plus"></i> Add Client</a>
+                    
+                <div class="modal fade" id="askForName" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                             <h5 class="modal-title">Enter Client Information: </h5>
@@ -56,10 +70,10 @@
                                         <div class="col-md-6 mb-3">
                                             <label>Email*</label>
                                             <div class="input-group">
-                                              <div class="input-group-prepend">
+                                                <div class="input-group-prepend">
                                                 <span class="input-group-text" id="inputGroupPrepend3">@</span>
-                                              </div>
-                                              <input type="email" class="form-control" placeholder="Email" name="email" aria-describedby="inputGroupPrepend3" required>
+                                                </div>
+                                                <input type="email" class="form-control" placeholder="Email" name="email" aria-describedby="inputGroupPrepend3" required>
                                             </div>
                                         </div>
                                     </div>                                 
@@ -96,13 +110,10 @@
                                 </div>
                             </form>
                         </div>
-                        </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <a class="btn btn-light btn-lg" role="button" href="/deleteClient"><i class="fas fa-user-times"></i> Delete Client</a>
-                </div>
             </div>
+           
         </div>  
     </section>
 

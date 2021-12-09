@@ -47,16 +47,16 @@
     border-color: black;
   }
 
-/* Section Users */
+/* Section Client */
   .addUser {
-    text-align: right;
+    text-align: center;
   }
 
-  #users .btn-dark {
+  #clients .btn-dark {
     color: white;
   }
 
-  .error {
+  #clients .error {
     color: red;
     font-family: Gallient;
     font-size: 14px;
@@ -64,40 +64,50 @@
     font-weight: bold;
   }
 
-  #users .container-fluid {
+  #clients .container-fluid {
     padding-left: 13%;
     padding-right: 10%;
   }
 
-  #users .card {
+  #clients .card {
     box-shadow: 0 0 10px 0 rgba(100, 100, 100, 0.26);
   }
 
-  #users .card-column {
+  #clients .card-column {
     padding-top: 30px;
   }
 
-  #users .card-link {
+  #clients .card-link {
     color: black;
   }
 
-  #users .card-link:hover {
+  #clients .card-link:hover {
     color: gray;
   }
 
-  #users .card-title {
+  #clients .card-title {
     margin-bottom: 0;
   }
 
-  #users .form-row {
+  #clients .form-row {
     text-align: left;
   } 
 
-  .client-info {
+  #clients .client-info {
     margin-bottom: 0px;
     font-size: 15px;
     text-align: center;
   }
+
+  #clients .card-dropdown-link {
+    cursor: pointer;
+    color: black;
+}
+
+  #clients .options {
+    text-align: right;
+    font-size: 1.0rem;
+}
 
 /* Photos Display Section */
   #photosSection .card-title {

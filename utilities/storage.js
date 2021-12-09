@@ -81,5 +81,10 @@ module.exports = {
 
         const downloadBlockBlobResponse = await getBlobClient(containerName, blobName).download();
         return await streamToBuffer(downloadBlockBlobResponse.readableStreamBody);
+    },
+
+    deleteContainer: async function(containerName) {
+        let containerClient = getContainerClient(containerName);
+        await containerClient.delete(); 
     }
 }

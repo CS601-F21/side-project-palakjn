@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const uuid = require('uuid');
 
-module.exports = function(app, Client) {
+module.exports = function(app, Client, Message) {
 
     app.get("/clients", function(req, res) {
         if (req.isAuthenticated()) {            
@@ -74,4 +74,57 @@ module.exports = function(app, Client) {
             res.redirect("/login");
         }
     });   
+
+    app.get("/clients/:id/delete", async function(req, res) {
+        if(req.isAuthenticated()) {
+            //Deleting all the messages
+            Message.deleteMany({clientId: req.params.id}, function(err) {
+                if(err) {
+                    console.log("Error while deleting the messages for client " + req.params.id + ". Error: " + err);
+                    //TODO: report error
+                } else {
+                    //Getting client information
+                    console.log("Deleted all the messages send to the client " + req.params.id);
+
+                    Client.find({_id: req.params.id}, function(err, client) {
+                        if(err) {
+                            console.log("Error while getting " + req.params.id + " client information. Error: " + err);
+                            //TODO: report error
+                        } else {
+                            //Deleting photo container
+                            storage.deleteContainer(client[0].photosContainer).then(() => {
+                                console.log("Deleted photo container: " + client[0].photosContainer);
+
+                                //Deleting message container
+                                storage.deleteContainer(client[0].msgContainer).then(() => {
+                                    console.log("Deleted message container: " + client[0].msgContainer);
+
+                                    //Deleting client
+                                    Client.deleteMany({_id: req.params.id}, function(err) {
+                                        if(err) {
+                                            console.log("Error while deleting client from database. Error: " + err);
+                                        } else {
+                                            console.log("Deleted client information from DB");
+                                            res.redirect("/clients");
+                                        }
+                                    });
+                                }).catch(error => {
+                                    console.log("Error while deleting message container " + client[0].msgContainer + ". Error: " + error);
+                                    //TODO: report error
+                                });
+                            }).catch(error => {
+                                console.log("Error while deleting message container " + client[0].photosContainer + ". Error: " + error);
+                                //TODO: report error
+                            });
+                        }
+                    });
+                }
+            });
+
+            //Delete container
+
+        } else {
+            res.redirect("/login");
+        }
+    });
 }

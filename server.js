@@ -44,7 +44,7 @@ login(app, passport, User);
 register(app, passport, User);
 logout(app);
 
-clients(app, Client);
+clients(app, Client, Message);
 photos(app, Client, User, Message);
 messages(app, Client, Message);
 profile(app, User);
