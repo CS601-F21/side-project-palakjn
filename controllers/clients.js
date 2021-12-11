@@ -5,15 +5,28 @@ const uuid = require('uuid');
 
 module.exports = function(app, Client, Message) {
 
+    //Display all the clients in UI.
     app.get("/clients", function(req, res) {
         if (req.isAuthenticated()) {            
             Client.find({userId: {$eq: req.user._id}}, function(err, allClients) {
-                if(err) {
-                    //TODO: handle error
+                if(err) {                    
                     console.log(err);
-                } else {                
+
                     res.render("clients", {
-                        existClient: "",
+                        success: null,
+                        failure: 'Server Error. Try Again Later!',
+                        clients: null,
+                        googleUser: req.user.googleId ? true : false
+                    });
+                } else {       
+                    var success = req.session.success;
+                    var failure = req.session.failure;
+                    req.session.success = null;
+                    req.session.failure = null;
+         
+                    res.render("clients", {
+                        success: success,
+                        failure: failure,
                         clients: allClients,
                         googleUser: req.user.googleId ? true : false
                     });
@@ -24,16 +37,24 @@ module.exports = function(app, Client, Message) {
         }
     });
 
+    //Creates new client
     app.post("/clients", function(req, res) { 
         if (req.isAuthenticated()) {             
             Client.find({userId: {$eq: req.user._id}}, function(err, allClients) {
                 if(err) {
-                    //TODO: handle error
                     console.log(err);
+
+                    res.render("clients", {
+                        success: null,
+                        failure: 'Server Error. Try Again Later!',
+                        clients: null,
+                        googleUser: req.user.googleId ? true : false
+                    });
                 } else {
                     if(allClients.some(client => client.email === req.body.email)) {
                         res.render("clients", {
-                            existClient: "Client with the email " + req.body.email + " already exists.",
+                            success: null,
+                            failure: "Client with the email " + req.body.email + " already exists.",
                             clients: allClients,
                             googleUser: req.user.googleId ? true : false
                         });
@@ -75,13 +96,17 @@ module.exports = function(app, Client, Message) {
         }
     });   
 
+    /** 
+     * Delete client information from server. This included deleting the container in Azure Blob being created for the client.
+    */
     app.get("/clients/:id/delete", async function(req, res) {
         if(req.isAuthenticated()) {
             //Deleting all the messages
             Message.deleteMany({clientId: req.params.id}, function(err) {
                 if(err) {
                     console.log("Error while deleting the messages for client " + req.params.id + ". Error: " + err);
-                    //TODO: report error
+                    req.session.failure = "Server Error. Try Again Later!";
+                    res.redirect("/clients");
                 } else {
                     //Getting client information
                     console.log("Deleted all the messages send to the client " + req.params.id);
@@ -89,7 +114,8 @@ module.exports = function(app, Client, Message) {
                     Client.find({_id: req.params.id}, function(err, client) {
                         if(err) {
                             console.log("Error while getting " + req.params.id + " client information. Error: " + err);
-                            //TODO: report error
+                            req.session.failure = "Server Error. Try Again Later!";
+                            res.redirect("/clients");
                         } else {
                             //Deleting photo container
                             storage.deleteContainer(client[0].photosContainer).then(() => {
@@ -103,6 +129,8 @@ module.exports = function(app, Client, Message) {
                                     Client.deleteMany({_id: req.params.id}, function(err) {
                                         if(err) {
                                             console.log("Error while deleting client from database. Error: " + err);
+                                            req.session.failure = "Server Error. Try Again Later!";
+                                            res.redirect("/clients");
                                         } else {
                                             console.log("Deleted client information from DB");
                                             res.redirect("/clients");
@@ -110,19 +138,14 @@ module.exports = function(app, Client, Message) {
                                     });
                                 }).catch(error => {
                                     console.log("Error while deleting message container " + client[0].msgContainer + ". Error: " + error);
-                                    //TODO: report error
                                 });
                             }).catch(error => {
-                                console.log("Error while deleting message container " + client[0].photosContainer + ". Error: " + error);
-                                //TODO: report error
+                                console.log("Error while deleting photos container " + client[0].photosContainer + ". Error: " + error);
                             });
                         }
                     });
                 }
             });
-
-            //Delete container
-
         } else {
             res.redirect("/login");
         }
