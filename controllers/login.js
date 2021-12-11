@@ -1,11 +1,18 @@
 
 module.exports = function(app, passport, User) {
+
+    /**
+     * Handles GET request for the route "/login" to display login page
+     */
     app.get("/login", function(req, res) {
         res.render("login", {
             errorMessage: ""
         })
     });
 
+    /**
+     * Handles POST request for the route "/login" to login to the system with username and password
+     */
     app.post("/login", function(req, res) {
         const user = new User({
             username: req.body.username,
@@ -27,7 +34,9 @@ module.exports = function(app, passport, User) {
             }
             req.login(user, function(err) {
                 if (err) {
-                    console.log(err);
+                    res.render("login", {
+                        errorMessage: "Unable to login. Try again later!"
+                    });
                 } else {
                     return res.redirect("/dashboard");
                 }
@@ -35,10 +44,16 @@ module.exports = function(app, passport, User) {
         }) (req, res)    
     });
 
+    /**
+     * Handles GET request for /auth/google to allow user to login with google
+     */
     app.get("/auth/google", 
         passport.authenticate("google", { scope: ["profile", "email"] })
     );
 
+    /**
+     * This is the redirect URL being called by Google after authenticating the user
+     */
     app.get("/auth/google/dashboard", function(req, res) {
         passport.authenticate("google", function(err, user, info) {
             if(err) {
@@ -52,6 +67,9 @@ module.exports = function(app, passport, User) {
             req.login(user, function(err) {
                 if (err) {
                     console.log(err);
+                    res.render("login", {
+                        errorMessage: "Unable to login. Try again later!"
+                    });
                 } else {
                     return res.redirect("/dashboard");
                 }
@@ -59,6 +77,9 @@ module.exports = function(app, passport, User) {
         }) (req, res)    
      });     
 
+     /**
+      * Handles GET request for the route /dashboard to display the home page of a user after user is being authenticated
+      */
     app.get("/dashboard", function(req, res) {
         if (req.isAuthenticated()) {
             res.render("dashboard", {
@@ -70,6 +91,9 @@ module.exports = function(app, passport, User) {
         }
     });
 
+    /**
+     * Handles GET request for the route /changepassword to display the page for changing the password
+     */
     app.get("/changepassword", function(req, res) {
         if(req.isAuthenticated()) {
             res.render("changepassword", {
@@ -81,15 +105,17 @@ module.exports = function(app, passport, User) {
         }
     });
 
+    /**
+     * Handles POST request for the route /changepassword to let user to change the password
+     */
     app.post("/changepassword", async function(req, res) {
         if(req.isAuthenticated()) {
             let user = await User.findById({_id: req.user._id});
 
             user.changePassword(req.body.oldpassword, req.body.newpassword, function(err) {
                 if(err) {
-                    //TODO: Report error in UI
                     console.log("Unable to change the password. " + err);
-                    let errorMessage = null;
+                    let errorMessage = "Server Error. Try Again Later!";
 
                     if(err == "IncorrectPasswordError: Password or username is incorrect") {
                         errorMessage = "Old password is incorrect";
