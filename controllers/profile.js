@@ -2,6 +2,9 @@ const StringBuffer = require("../utilities/stringHandler");
 
 module.exports = function(app, User) {
 
+    /**
+     * Handle GET request for the route /profile to display the user details in UI
+     */
     app.get("/profile", function(req, res) {
         if (req.isAuthenticated()) {
             User.find({_id: {$eq: req.user._id}}, function(err, user) {
@@ -24,6 +27,9 @@ module.exports = function(app, User) {
         }
     });
 
+    /**
+     * Handle POST request for the route /profile to receive the updated user information and updates the information in Database
+     */
     app.post("/profile", async function(req, res) {
         if (req.isAuthenticated()) {
 

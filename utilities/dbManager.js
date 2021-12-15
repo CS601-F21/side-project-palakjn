@@ -6,6 +6,9 @@ const userSchema = require("../models/userSchema");
 const clientSchema = require("../models/clientSchema");
 const messageSchema = require("../models/messageSchema");
 
+/**
+ * Connect with the database easyshare in mongodb
+ */
 exports.initDB = function() {
     mongoose.connect("mongodb://" + process.env.DB_HOST + "/easyShare", {
         useNewUrlParser: true,
@@ -20,6 +23,10 @@ exports.initDB = function() {
     });
 }
 
+/**
+ * Creates User collection
+ * @returns User collection
+ */
 exports.createUserCollection = function() {
     const user = userSchema.getUserSchema();
     user.plugin(passportLocalMongoose);
@@ -28,12 +35,20 @@ exports.createUserCollection = function() {
     return new mongoose.model("User", user);
 }
 
+/**
+ * Creates Ckient Collection
+ * @returns Client Collection
+ */
 exports.createClientCollection = function() {
     const client = clientSchema.getClientSchema();
 
     return mongoose.model("Client", client);
 }
 
+/**
+ * Creates message collection
+ * @returns MessageCollection
+ */
 exports.createMessageCollection = function() {
     const message = messageSchema.getMessageSchema();
 

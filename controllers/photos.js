@@ -7,6 +7,9 @@ const unlinkFile = util.promisify(fs.unlink);
 const uuid = require('uuid');
 const mailTransporter = require("../utilities/mailHandler");
 
+/**
+ * Tells mutler what should be the destination and file names
+ */
 var storage = multer.diskStorage(
     {
         destination: 'uploads/',
@@ -18,6 +21,9 @@ var storage = multer.diskStorage(
 
 var upload = multer( { storage: storage } );
 
+/**
+ * Uploads blob to a container and then deleting the file from the local disk storage
+ */
 uploadBlob = async function(containerName, file, directory) {
     await azureStorage.createBlob(containerName, file, directory);
     await unlinkFile(directory + "/" + file);
@@ -25,6 +31,9 @@ uploadBlob = async function(containerName, file, directory) {
 
 module.exports = function(app, Client, User, Message) {
 
+    /**
+     * Handles GET request for the route /:id/photos to display all the photos for the client with the id being provided as in URL
+     */
     app.get("/:id/photos", function(req, res) {
         if (req.isAuthenticated()) {
             Client.find({_id: {$eq: req.params.id}}, function(err, client) {
@@ -63,6 +72,12 @@ module.exports = function(app, Client, User, Message) {
         }
     });
 
+    /**
+     * Handles POST request for the route /:id/photos to upload photos to Azure blob.
+     * First, we download the photos in local storage 
+     * Second, we upload them one by one to Azure blob
+     * Third, after uploading, delete them from local storage
+     */
     app.post("/:id/photos", upload.array("uploads", 10), function(req, res) {
         if (req.isAuthenticated()) {  
 
@@ -104,6 +119,9 @@ module.exports = function(app, Client, User, Message) {
         }
     });
 
+    /**
+     * Handles GET request for the route /:id/photos/send to send the link to the client to display all the photos
+     */
     app.get("/:id/photos/send", function(req, res) {
         if (req.isAuthenticated()) {
 
@@ -167,6 +185,9 @@ module.exports = function(app, Client, User, Message) {
         }
     });
 
+    /**
+     * Handles GET request for the route /:clientId/photos/:id to display the form to the customer the list of photos being uploaded by photographer
+     */
     app.get("/:clientId/photos/:id", function(req, res) {
         //Get Client information from DB
         Client.find({_id: {$eq: req.params.clientId}}, function(err, client) {
@@ -196,6 +217,10 @@ module.exports = function(app, Client, User, Message) {
         });
     });
 
+    /**
+     * Handles POST request for the route /:clientId/photos/:id to get the selected photos from the client.
+     * Creating a .txt file having all those selected file URLs and upload this .txt file to Azure blob
+     */
     app.post("/:clientId/photos/:id", function(req, res) {
         Client.find({_id: {$eq: req.params.clientId}}, function(err, client) {
             //Get the list of photos which user has selected
@@ -252,7 +277,6 @@ module.exports = function(app, Client, User, Message) {
                     //Update client table to remove shared url
                     Client.findByIdAndUpdate({_id: req.params.clientId},{"sharedUrl": null}, function(err1){
                         if(err1){
-                            //TODO: Handle the error
                             console.log(err1);
                         }
                         else{
@@ -269,7 +293,6 @@ module.exports = function(app, Client, User, Message) {
                 });      
             } else {
                 //Redirecting back to display all the images to let client to choose photos again because of internal error
-                //TODO: Display error message in user to let them know to choose again.
                 res.redirect("/" + req.params.clientId + "/photos/" + req.params.id);
             }
         });

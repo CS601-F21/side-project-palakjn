@@ -1,10 +1,16 @@
 require('dotenv').config();
 const nodemailer = require("nodemailer");
 
+/**
+ * Return the subject of the mail
+ */
 getSubject = function() { 
     return "Your photos are ready!"
 }
 
+/**
+ * Create the mail body
+ */
 getMailBody = function(userName, clientName, link) {
     var message = "Hello " + clientName + ",\n\n";
     message = message.concat("We hope you are having a productive day.\n\n");
@@ -22,6 +28,14 @@ getMailBody = function(userName, clientName, link) {
 module.exports = {
     //Reference: https://dev.to/sudarshansb143/send-mail-using-node-js-and-gmail-in-few-simple-steps-4n79
 
+    /**
+     * Sends mail to the provided username
+     * @param {*} email 
+     * @param {*} userName 
+     * @param {*} clientName 
+     * @param {*} link 
+     * @returns A promise object from NodeMailer sendMail method
+     */
     sendMail: async function (email, userName, clientName, link) {
         let mailTransporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',

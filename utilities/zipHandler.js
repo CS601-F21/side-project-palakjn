@@ -4,6 +4,12 @@ const storage = require("./storage");
 const StringBuffer  = require("./stringHandler");
 
 module.exports = {
+    /**
+     * Create the zip of photos 
+     * @param {*} filePath 
+     * @param {*} containerName 
+     * @param {*} photoUrls 
+     */
     createZip: async function(filePath, containerName, photoUrls) {
         var zip = new AdmZip();
 

@@ -1,11 +1,17 @@
 module.exports = function(app, passport, User) {
 
+    /**
+     * Handle GET request for the route /register to display the register page to user
+     */
     app.get("/register", function(req, res) {
         res.render("register", {
             errorMessage: ""
         })
     });
     
+    /**
+     * Handle POST request for the route /register to receive the details of the register form and creating a new user to the application
+     */
     app.post("/register", function(req, res) {
     
         User.register({username: req.body.username, fname: req.body.fname, lname: req.body.lname, displayName: req.body.fname + " " + req.body.lname}, req.body.password, function(err, user){

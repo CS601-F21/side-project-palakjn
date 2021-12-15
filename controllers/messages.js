@@ -8,6 +8,9 @@ const zip = require("../utilities/zipHandler");
 
 module.exports = function(app, Client, Message) {
     
+    /**
+     * Handles GET request for the route /messages/unread to display unread messages in UI
+     */
     app.get("/messages/unread", async function(req, res) {
         if (req.isAuthenticated()) {            
             var messages = [];
@@ -40,6 +43,9 @@ module.exports = function(app, Client, Message) {
         }
     });
 
+    /**
+     * Handles GET request for the route /messages/read to display read messages in UI
+     */
     app.get("/messages/read", async function(req, res) {
         if (req.isAuthenticated()) {            
             var messages = [];
@@ -72,6 +78,9 @@ module.exports = function(app, Client, Message) {
         }
     });
 
+    /**
+     * Handles GET request for the route /messages/:id to display particular message in UI
+     */
     app.get("/messages/:id", async function(req, res) {
         if(req.isAuthenticated()) {
             const uploadFolder = path.join(__dirname, "../selected");
@@ -117,6 +126,10 @@ module.exports = function(app, Client, Message) {
         }
     });
 
+    /**
+     * Handles GET request for the route /messages/:id/download to download the images seletected by the client. 
+     * Will first create the zip having all the files and will download it.
+     */
     app.get("/messages/:id/download", async function(req, res) {
         if(req.isAuthenticated()) {
             const uploadFolder = path.join(__dirname, "../selected");

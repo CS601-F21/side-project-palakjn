@@ -3,9 +3,25 @@ Easy Share
 
 ### Project Description:
 ***
-
+Memories are timeless treasures of the heart. Happy times come and go, but the memories stay forever. A photograph keeps a moment from running away. 
+Currently the photographers share photos in a Traditional ways due to which they face a lot of challenges <br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;* Photographer clicks more than 1k photos and those photos are RAW and not edited. <br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;* It will take a lot of time for the photographer to edit such a huge number of photos when the client only wants a subset of them in an album.<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;* Best case is when photographer share raw photos with the customer and customer will select the photos they like<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;* In such case, the photographer will edit only the photos which customers like to be in an album<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;* Usually, photographer and customer lives far away from one another. So, a normal issue comes up how the photographer will share photos with the customer.<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;* One traditional approach is to use pendrive<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; Two problems with the traditional approach is <br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Have to send Pendrive physically which involves delay<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Uneasy for customers to select photos as they have to note down the photo filenames. <br/>                               
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;* Some people use Cloud storage directly like google drive to share photos with the customer.<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; One problem with this <br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Uneasy for the customer to select photos<br/>
+<br/>
+Our application EasyShare provides an easy and simple solution to photographers to share photos with the customer and gives customers an easy approach to view and select photos.<br/>
 
 ### Features of the web application:
+***
 
 | Feature         | Description |
 | ------- |-------------| 
@@ -38,11 +54,12 @@ Steps:
   
     1)	Download the zip.
     2)	Open command prompt and cd to the location where you have downloaded the project
-    3)	type “npm install”  It will download the dependencies
-    4)	then, type “node server.js”  It will start the server
+    3)	type “npm install” --> It will download the dependencies
+    4)	then, type “node server.js” --> It will start the server
     5)	Go to browser and type http://localhost:3032/
 
 ### Time Taken for the project to be complete
+***
 
 | Functionality | Time took |
 | ------------- | :-------: |
