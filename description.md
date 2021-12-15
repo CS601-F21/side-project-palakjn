@@ -55,8 +55,24 @@ Steps:
     1)	Download the zip.
     2)	Open command prompt and cd to the location where you have downloaded the project
     3)	type “npm install” --> It will download the dependencies
-    4)	then, type “node server.js” --> It will start the server
-    5)	Go to browser and type http://localhost:3032/
+    4)  Create one .env file with below attributes. keep the left side of = as intact, change the value of left side of = sign
+        SECRET= <ANY RANDOM LONG STRING>
+        DB_HOST= <URL OF THE DB SERVER>
+        PORT= PORT NUMBER WHICH YOUR SERVER RUNNING ON
+
+        CLIENT_ID= <GOOGLE CLIENT ID>
+        CLIENT_SECRET= <GOOGLE SECRET KEY>
+
+        AZURE_CONNECTION_STRING= <AZURE CONNECTION STRING>
+        SAS_TOKEN=?sv= <SAS TOKEN>
+
+        AZURE_URL= <AZURE URL OF THE STORAGE>
+
+        GMAIL_USERNAME= <PHOTOGRAPHER EMAIL ID>
+        GMAIL_PASSWORD= <PHOTOGRAPHER PASSWORD>
+
+    5)	then, type “node server.js” --> It will start the server
+    6)	Go to browser and type http://localhost:3032/
 
 ### Time Taken for the project to be complete
 ***
