@@ -29,8 +29,8 @@ Our application EasyShare provides an easy and simple solution to photographers 
 | Authentication with Google |	Authenticating users to authenticate themselves through third party i.e. Google |
 | View Clients | Displaying details of all the clients which a user has. |
 | Create Client | Creating new client by entering all appropriate detail. |
-| Delete Client | Deleting client information from database and the container assigned for the client. |
-| Add photos (per client) | Adding photos to the client folder with whom the user wants to share with.  |
+| Delete Client | Deleting client information from database and all the containers being created for the particular client in Azure Blob Storage. |
+| Add photos (per client) | Adding photos to the client folder with whom the user wants to share photos with.  |
 | View photos per client | Displaying all the photos for the client |
 | Send photos to the client | Creating a form which will display all the photos which user has uploaded for the client and sharing the link of the form with the client via mail.  |
 | Viewing and selecting the photos by Client | <ul><li>Client will receive the link from photographer (user of our application).</li><li>The form will allow the client to select any number of photos</li><li>The form will be submitted only once by that shared link. Multiple attempts are prohibited.</li><li> If client wants to select photos again then the client has to request photographer to send the new link again</li> </ul> |
@@ -54,7 +54,7 @@ Steps:
   
     1)	Download the zip.
     2)	Open command prompt and cd to the location where you have downloaded the project
-    3)	type “npm install” --> It will download the dependencies
+    3)  Run the command “npm install” which will download all the dependencies
     4)  Create one file with the exact name as ".env" with below attributes. keep the left side of = as intact, change the value of the right side of = sign
         SECRET= <ANY RANDOM LONG STRING>
         DB_HOST= <URL OF THE DB SERVER>
@@ -71,7 +71,7 @@ Steps:
         GMAIL_USERNAME= <PHOTOGRAPHER EMAIL ID>
         GMAIL_PASSWORD= <PHOTOGRAPHER PASSWORD>
 
-    5)	then, type “node server.js” --> It will start the server
+    5)	Run the command “node server.js” which will start the server
     6)	Go to browser and type http://localhost:<PORT NUMBER YOU MENTIONED IN .env FILE>/
 
 ### Time Taken for the project to be complete
